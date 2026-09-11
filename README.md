@@ -14,6 +14,7 @@
 
 * **Currently**
   * AWS Solutions Architect Associate (`Preparing`)
+  * Python Promgraming language learn (`Preparing`)
 
 * **4Q/2026**
   * AWS Solutions Architect Associate (`Preparing`)
