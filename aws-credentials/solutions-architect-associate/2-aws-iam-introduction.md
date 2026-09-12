@@ -76,7 +76,7 @@ IAM 기능을 사용해 실행되는 애플리케이션에 대해 안전하게 �
 
 사용자의 자원 요청에 관한 정보를 포함한 기록 계좌 로그를 받고 IAM 신원을 기반으로 한다.
 
-## 2.1 PCI DSS 준수
+## 2.2 PCI DSS 준수
 
 IAM은 처리, 저장, 전송을 지원해 서비스 제공자에 의해 신용카드 데이터에 대한 정보와 결제 산업(PCI) 데이터 보안 표준(DSS)을 준수하는 것으로 검증되었다.
 
@@ -167,23 +167,83 @@ IAM 쿼리 API를 통해 프로그래밍적으로 IAM과 AWS에 접근할 수 �
 
 # 5. IAM 프로세스 원리
 
+<img width="50%" height="350" alt="image" src="https://docs.aws.amazon.com/images/IAM/latest/UserGuide/images/intro-diagram%20_policies_800.png" />
+
 * IAM이 리소스에 대한 주요 접근 권한을 요청을 할 경우 승인 요청에 대한 응답으로 접근 거부를 할 수 있으며, 특정 서비스에 접근하는 것이 아닌 서비스를 선택 이후 접근 권한을 승인 요청을 하는 것이다.
 * IAM 검증 신원이 권한 있는 사용자 목록에 포함된다면 어떤 정책이 이를 통제하는 것이지 결정하고 접근 권한이 부여된 수준을 평가해 시행 중인 다른 정책들도 평가한다.
 * 승인이 이루어지면 소유자는 사용자의 자원에 대해 행동이나 작업을 수행할 수 있다.
 
 ## 5.1 요청의 구성 요소
 
-프린시펄이 AWS 관리 콘솔, AWS API, 또는 AWS CLI를 사용하려 할 때 프린시펄은 AWS에 요청을 보낸다.
+프린시펄이 AWS 관리 콘솔, AWS API, 또는 AWS CLI를 사용하려 할 때 프린시펄은 AWS에 다음과 같은 요청서에 내용을 포함하여 보낸다.
 
 * **행동 또는 연산**
   * 행동 또는 주체가 수행하고자 하는 작업들 또는 AWS 관리 콘솔에서의 동작이나 AWS CLI 또는 AWS API 내에서 동작하는 것도 포함된다.
 * **리소스**
-  * 
+  * AWS 리소스 객체 주체가 어떤 동작이나 연산을 수행해 달라고 요청한다.
+* **원칙**
+  * 사람 또는 신청 요청을 보낼 엔티티를 사용했으며, 관련 정보 허가 정책 포함을 시킨다.
+* **환경 데이터**
+  * IP에 관한 정보 주소ㅗ, 사용자 에이전트, SSL 활성화 상태, 타임스탬프가 포함된다.
+* **자원 데이터**
+  * DynamoDB 테이블 이름이나 EC2 인스턴스와 같은 자원과 관련된 데이터를 요청한다.
+
+## 5.2 주체에 대한 인증 방식
+
+주체가 AWS에 로그인하는 작격증명을 사용하고, IAM이 이를 인증 허용을 하여 AWS에 요청을 보내도록 한다. 예를 들어 Amazon S3나 [AWS STS](https://docs.aws.amazon.com/STS/latest/APIReference/Welcome.html)와 같은 일부 서비스는 이를 지원하고 익명의 사용자로 부터 구체적인 요청이 필요있기 때문에 예외적인 경우를 제외한 다음과 같은 해당하는 각 유형 사용자가 인증을 거친다.
+
+* **연합 원금**
+  * 사용자는 신원 제공자 인증을 받고 AWS에 자격을 전달해 주어지며, 직접적인 로그인이 필요하지는 않아 IAM Identity Center와 IAM 모두 신원 연합을 지원한다.
+* **루트 사용자**
+  * 로그인 자격 증명 인증에 사용되는 것은 AWS 계정을 생성할 대 사용한 이메일 주소와 당시 지정한 비밀번호가 포함된다.
+* **IAM 사용자**
+  * 계정 ID 또는 별명, 사용자 이름, 비밀번호의 API에서 워크로드를 인증하기 또는 AWS CLI를 사용해 임시 자격 증명을 사용할 수 있다.
+* **AWS IAM Identity Center Directory**
+  * IAM Identity Center 기본 디렉터리 서명에서 직접 생성된 사용자 aws 액세스 포털을 사용할 대 사용자 이름과 비밀번호를 제공해야 한다.
+
+## 5.3 권한 부여 및 권한 정책 기본
+
+권한이란 함은 주체가 작업을 완료할 수 있는 필요한 권한을 가진 것을 의미한다. 요청과 승인 과정에서 IAM은 요청에 적용되는 정책을 식별하고 요청 컨텍스트에서 값을들 얻는다. 이후 적용되는 정책에 대한 허용 여부를 결정하거나 거부할 수 있기에 IAM은 대부분의 구너한 정책은 JSON 문서로 저장하여 권한을 관리한다.
+
+* Access Policy Role
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "support.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
+}
+```
+
+영향을 줄 수 있는 여러 유형의 정책이 존재하고 이에 따른 허가 요청이 필요하기 때문에 사용자에게 AWS 리소스에 접근할 권한을 부여하는 것으로 계정에서는 신원 기반 정책을 사용할 수 있다. 리소스 기반 정책은 계정 간 접근을 허용하여 요청하는 것을 다른 계정의 정책이 존재해야 하며 요청하는 데 사용하는 자원과 IAM Identity에 접근할 수 있어야 요청을 허용하는 신원 기반 정책이 무조건 필요하다.
+
+IAM은 요청의 맥락에 적용되는 각 정책을 확인해 정책 평가에는 명시적 부정을 사용하고 이는 단일 권한 정책에는 거부된 동작이 포함되 전체 요청을 거부하고 중단한다. 요청이 기본적으로 거부 (`Reject`)되기 때문에 적용 가능한 권한 정책은 iam 요청의 모든 부분이 사용자의 권한을 부여할 수 있도록 다음과 같은 규칙을 준수하여 허용해야 한다.
+
+* 기본적으로 모든 요청은 거부된다.
+* 모든 권한 정책이 명시적 허용 이 기본값을 무시한다.
+* AWS 조직의 서비스 제어 정책 (`SCP`) 또는 리소스 제어 정책의 존재 (`RCP`), IAM 권한 경계, 세션 정책이 허용을 덮는 경우 하나 이상의 경우 이러한 정책 유형 중 모두 요청을 허용해야 한다. 이런 절차를 하지 않은 경우 암묵적인 거부로 변경된다.
+* 어떠한 정책이든 명시적 거부는 어떤 정책의 허용보다 우선한다.
+
+IAM이 주체를 인증 후 승인을 한 후에 행동을 승인하거나 소유자에게 적용되는 권한 정책을 평가하고 요청 시 운영을 진행한다. 각 AWS 서비스는 지원하는 액션 (`Operation`)을 정의하며, 사용자들이 할 수 있는 것들도 포함된다.
+
+* **CreateUser**
+* **DeleteUser**
+* **GetUser**
+* **UpdateUser**
+
+권한 정책에 접근 권한을 제공하는 조건을 지정할 수 있어 요청이 지정된 조건을 충족할 때 자원을 제공한다. 특정 조건을 지정하려면 정책 문장의 조건 요소를 사용하면 된다. IAM이 요청 내 연산을 승인한 후, 주체는 관련 작업을 수행할 수 있기에 자원들과 리소스들은 서비스 내에 존재하는 객체이다.
 
 ---
 
 # Etc. 참조
 
-* [AWS Identity and Access Management Docs](https://docs.aws.amazon.com/ko_kr/IAM/latest/UserGuide/introduction.html)
-* [AWS Security Token Service Docs](https://docs.aws.amazon.com/STS/latest/APIReference/Welcome.html)
+* [AWS Identity and Access Management docs](https://docs.aws.amazon.com/ko_kr/IAM/latest/UserGuide/introduction.html)
+* [AWS Security token service docs](https://docs.aws.amazon.com/STS/latest/APIReference/Welcome.html)
 * [AWS Cloud Security PCI DSS Rule](https://aws.amazon.com/ko/compliance/pci-faqs/)
+* [AWS Policy evaluation logic](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html)
