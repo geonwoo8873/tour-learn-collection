@@ -69,10 +69,40 @@ IAM은 IAM 사용자와 루트 사용자에게 장기 보안 인증 정보를 �
 >   * 기억 디렉터리가 Microsoft AD인 경우 AWS IAM Identity Center를 사용하여 AD의 자체 관리형 디렉터리 또는 AWS Directory Service의 디렉토리에 연결해 기업 디렉토리와 AWS 간의 신뢰를 설정할 수 있다.
 >   * Okta 또는 Microsoft Entra와 같은 외부 ID IdP를 사용하여 사용자를 관리하는 경우 AWS IAM Identity Center을 사용해 IdP와 AWS 계정 간에 신뢰를 설정할 수 있다.
 > * **사용자가 이미 인터넷 자격 증명을 보유한 경우**
->   * 
+>   * 사용자가 Platform 또는 OIDC 호환 자격 증명 공급자 등의 인터넷 자격 증명 공급자를 통하여 사용자를 식별할 수 있도록 모바일 웹 기반 앱을 만들면, 해당 앱에서 연동을 통해 AWS에 액세스할 수 있다.
+
+## 1.2 사용자 액세스를 제공하는 방법
+
+* **사용자 액세스 유형**
+  * IAM Identity Center를 사용하여 AWS 리소스에 액세스 하기 위한 SSO 액세스
+    * IAM Identity Center는 사용자의 관리와 AWS 계정 및 클라우드 애플리케이션에 대한 액세스를 통합하는 중앙 위치를 제공
+    * IAM Idnetity Center 내에서 ID 스토어를 설정하거나 기존 IdP와의 페더레이션을 구성할 수 있으며 보안상 가장 좋은 방법은 사용자에게 AWS 리소스에 대한 제한된 보안 인증 정보를 부여하는 것
+    * 사용자는 보다 쉽게 로그인할 수 있어 단일 시스템에서 리소스에 대한 액세스를 제어할 수 있고, IAM Identity Center는 추가 계정 보안을 위해 MFA를 지원
+  * IAM ID IdP를 사용하여 AWS 서비스에 액세스하기 위한 페더레이션 액세스
+    * IAM은 OIDC 또는 SAML 2.0과 호환되는 IdP를 지원한다. IAM IdP를 생성 후 페더레이션 보안 주체에게 동적으로 할당할 수 있는 IAM 역할을 하나 이상 생성
+  * AWS 계정 간 크로스 계정 액세스
+    * 일부 AWS 리소스에 대한 액세스를 AWS 계정 사용자와 공유하려고 할 경우에 유용하며 역할은 교차 계정 액세스를 부여하는 기본적인 방법이지만 일부 AWS 서비스는 정책을 리소스에 직접 연결할 수 있는 리소스 기반 정책을 지원한다.
+  * AWS 계정의 지정된 IAM 사용자를 위한 장기 보안 인증
+    * AWS에서 IAM 사용자의 장기 보안 인증이 필요한 특정 사용 사례가 있으나 IAM을 사용하여 AWS 계정에서 이러한 사용자를 생성하고 IAM을 통해 해당 권한을 관리한다.
+
+## 1.3 프로그래밍 방식의 사용자 액세스 지원
+
+사용자가 AWS Management Console 외부에서 AWS와 상호 작용하려면 프로그램 ㅇ방식의 액세스 권한이 필요해 액세스를 부여하는 방법은 AWS에 액세스 요청하는 사용자 유형에 따라 다르다.
+
+* IAM Identity Center에서 ID를 관리하는 경우 AWS API에는 프로필이 필요하고 AWS Command Line Interface에는 프로필이나 환경 변수가 필요하다.
+* IAM 사용자가 있는 경우 AWS API 및 AWS Command Line Interface에는 액세스 키가 별도로 필요하며, 액세스 키 ID, 비밀 액세스 키 및 보안 인증 정보가 만료되는 시간을 나타내는 보안 토큰으로 구성된 임시 보안 인증 정보를 만든다.
+
+* **프로그래밍 방식 액세스가 필요한 사용자**
+  * 작업 인력 ID
+    * 단기 자격 증명을 사용하여 AWS CLI 또는 AWS API에 대한 프로그래밍 방식 요청에 직접 또는 AWS SDK를 사용하여 서명해야 한다.
+  * IAM 사용자
+    * 단기 또는 장기 자격 증명을 사용하여 AWS CLI 또는 AWS API에 대한 프로그래밍 방식 요청에 직접 또는 AWS SDK를 사용하여 서명해야 한다.
+  * 페더레이션 보안 주체
+    * AWS STS API 작업을 사용하여 액세스 키 페어 및 세션 토큰을 포함하는 임시 보안 인증 정보로 새 세션을 생성한다.
 
 ---
 
 ## 참조
 
 [AWS Account root user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user.html#id_root-user-access-management)
+[AWS OIDC](https://docs.aws.amazon.com/ko_kr/IAM/latest/UserGuide/id_roles_providers_oidc.html)
