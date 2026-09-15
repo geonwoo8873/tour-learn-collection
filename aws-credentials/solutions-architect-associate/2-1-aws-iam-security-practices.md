@@ -154,9 +154,39 @@ IAM 사용자 또는 IAM 그룹에 여러 정책을 연결하여 다양한 권�
 * **리소스 기반 정책**
   지정된 보안 주체가 해당 리소스에 대해 수행할 수 있는 작업 및 이에 관한 조건을 제어하고 리소스 기반 정책은 인라인 형태의 정책으로 관리형 리소스 기반 정책은 없다. 크로스 계정 액세스를 활성화하는 경우 전체 계정이나 다른 계정의 IAM 엔터티를 리소스 기반 정책의 보안 주체로 지정할 수 있다.
 
+# 3. ABAC 권한 부여를 통한 속성 기반 권한 정의
+
+<img width="50%" height="25%" alt="image" src="https://docs.aws.amazon.com/images/IAM/latest/UserGuide/images/tutorial-abac-concept-23.png">
+
+ABAC (`Attribute-based access control` / `속성 기반 액세스 제어`)는 속성을 기준으로 권한을 정의하는 권한 부여 전략이다. 흔히 태그라는 별칭을 가지고 있지만 IAM 엔터티를 포함하는 IAM 리소스와 AWS 리소스에 태그를 연결할 수 있기 때문에 IAM 보안 주체에 대해 단일 ABAC 정책 또는 하나의 작은 정책 세트를 생성할 수 있다.
+
+보안 주체의 태그가 리소스 태그와 일치할 때 작업을 허용하도록 ABAC 정책을 설계할 수 있으며, 속성 시스템은 높은 사용자 컨텍스트와 세분화된 액세스 제어를 모두 제공하여, ABAC는 속성 기반이기에 실시간으로 액세스 권한을 부여하거나 회수하는 데이터 또는 애플리케이션에 대해 동적 권한 부여를 수행할 수 있다. 이는 확장 중인 환경과 자격 증명 또는 리소스 정책 관리의 규모가 커짐에 따라 복잡도가 상승한 상황에서 유용하다.
+
+## 3.1 ABAC와 RBAC 모델 비교
+
+<img width="50%" height="25%" alt="image" src="https://docs.aws.amazon.com/images/IAM/latest/UserGuide/images/tutorial-abac-rbac-concept-23.png">
+
+IAM에 사용되는 기존 권한 부여 모델은 RBAC (`Role-Based access control` / `역할 기반 액세스 제어`)이라고 부르며, 이는 IAM 역할과 구별되는 개인의 직무나 역할에 따라 권한을 정의하기 때문에 IAM에는 직무에 관한 관리형 정책이 제공되고 있어 RBAC 모델의 작업 기능에 대한 사용 권한을 정렬할 수 있다.
+
+IAM에서는 다양한 직무에 대해 서로 다른 이해관계의 정책을 생성하여 구현한다. 정책을 자격 증명에 연결하여, 적극적인 권장 방안은 직무에 필요한 최소 권한을 부여하여 이로 인한 결과적인 부분은 최소 범위의 적용하는 최소 권한 액세스라고 한다. 각 직무 정책에는 해당 정책이 할당된 자격 증명이 액세스할 수 있는 특정 리소스가 나열되어 있어 기존 RBAC 모델을 사용해 사용자가 환경에 새 리소스를 추가할 때 해당 리소스에 액세스할 수 있도록 정책을 지속적인 업데이트를 해야하는 단점이 존재한다.
+
+**ABAC는 전통적인 RBAC 모델에 비해 다음과 같은 이점을 제공한다.**
+* **ABAC 권한은 혁신적으로 확장된다.**
+  * 관리자가 새 리소스에 액세스할 수 있도록 기존 정책을 수정 혹은 업데이트할 필요가 없다.
+* **ABAC를 사용하면 필요한 정책 수가 적어진다.**
+  * 각 직무에 대해 서로 다른 정책을 생성할 필요가 없기 때문에 생성해야 하는 정책이 적어 관리와 제어에서 유지보수가 편리하다.
+* **ABAC를 사용하면 팀이 변화와 성장에 동적으로 대응할 수 있다.**
+  * 새 리소스에 대한 권한이 속성에 따라 자동으로 부여되므로 자격 증명에 정책을 수동으로 할당할 필요가 없다.
+* **ABAC를 사용하여 세분화된 권한을 사용할 수 있다.**
+  * 정책을 생성할 때는 최소 권한을 부여하는 것이 가장 좋으므로 기존 RBAC를 사용하는 경우에는 특정 리소스에 대한 액세스를 허용하는 정책을 작성한다.
+  * ABAC를 사용하는 경우 리소스의 태그가 보안 주체의 태그와 일치하는 경우에만 모든 리로스에 대한 작업을 허용할 수 있다.
+* **ABAC를 사용하여 회사 디렉터리의 직원 속성을 사용한다.**
+  * 세션 태그를 IAM에 전달하도록 SAML 또는 OIDC 공급자를 구성할 수 있으며, AWS에 페더레이션되면 IAM은 해당 속성을 결과 보안 주체에 적용한다. 이는 ABAC를 사용하여 이러한 속성에 따라 권한을 허용하거나 거부할 수 있다.
+
 ---
 
 ## 참조
 
 [AWS Account root user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user.html#id_root-user-access-management)
 [AWS OIDC](https://docs.aws.amazon.com/ko_kr/IAM/latest/UserGuide/id_roles_providers_oidc.html)
+[AWS IAM tag tutorial](https://docs.aws.amazon.com/ko_kr/IAM/latest/UserGuide/tutorial_attribute-based-access-control.html)
