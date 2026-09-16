@@ -7,8 +7,10 @@
 **/obj
 
 # Go ignore files
-
 *.exe
+
+# Rust ignore files
+**/target
 
 # Secret files
 
