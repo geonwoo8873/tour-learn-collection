@@ -107,6 +107,22 @@ Amazon Machine Image (`AMI`)는 Amazon EC2 Intance를 설정하고 부팅하는 
 | Explicit (`명시적`) | 소유자는 특정 AWS 계정, 조직 또는 OU (`조직 단위`)에 시작 권한을 부여한다. |
 | Implicit (`암묵적`) | 소유자는 AMI에 대한 암묵적인 시작 권한을 갖는다. |
 
+## 3.2 루트 볼륨 유형 [`Root Vloume Type`]
+
+**모든 AMI는 Amazon EBS에 의해 지원되는 유형 또는 Amazon S3에 의해 지원되는 유형으로 분류된다.**
+* **Amazon EBS 지원 AMI**
+  * AMI에서 시작된 인스턴스의 루트 볼륨은 Amazon EBS 스냅샷 (`SnapShot`)에서 생성된 Amazon Elastic Block Store (`EBS`) 볼륨이며 Linux와 Windows AMI 모두 지원된다.
+* **Amazon S3 지원 AMI**
+  * AMI에서 시작된 인스턴스의 루트 볼륨은 Amazon S3에 저장된 템플릿으로 부터 생성된 인스턴스 저장소 볼륨이며, Linux AMI에서만 지원하지만 Windows AMI의 루트 볼륨에 대한 인스턴스 저장소는 지원하지 않는다.
+
+#### EBS 지원 AMI과 S3 지원 AMI의 정리
+
+**Amazon EBS 지원 AMI**
+Amazon EBS 지원 AMI는 EBS 볼륨이 루트 볼륨이며 인스턴스의 부팅 시간이 `S3 지원 AMI` 보다 빠른 `평균 1분 이하로 부팅 완료`되며, 데이터의 지속이 기본적으로 인스턴스가 `종료될 때 루트 볼륨이 동시에 삭제`되며 `다른 EBS 볼륨의 데이터는 종료 후에도 유지`된다. 중지 상태일 때 인스턴스가 중지되고 실행 중이지 않은 경우에도 루트 볼륨은 EBS에 유지된다. 
+
+인스턴스 유형, Kernel내 리소스 (`RAM`, `Disk`, `User`) 데이터는 변경될 수 있으며 비용 부과 유형에서 `인스턴스 사용량`, `EBS 볼륨 사용량` 및 `스냅샷`으로 저장하는 것에 대한 비용이 청구되며, 생성 과정도 단일 명령 혹은 호출을 사용하면된다.
+
+**Amazon S3 지워 AMI**
 
 ---
 
