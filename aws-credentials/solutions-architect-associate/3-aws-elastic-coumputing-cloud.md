@@ -15,6 +15,47 @@ EC2 Instance는 AWS 클라우드의 가상 서버로 Instance를 시작할 때 �
 
 각 인스턴스 유형은 공유 리소스의 최소 성능을 상황에 따라 제공량이 다르다. I/O 성능이 높은 인스턴스 유형에는 더 많은 공유 리소스가 할당되어 성능의 변동성이 그만큼 감소하지만 대부분의 애플리케이션에 대해서는 보통 수준의 성능만으로 충분하기 때문에 일관적인 성능이 필요한 애플리케이션에 대해서는 높은 유형의 인스턴스를 사용하는 것이 좋다.
 
+## 2.1 EC2 Instance Type 명명 규칙
+
+**Instance Serise**
+| Serise      | Description                                                                                           |
+| ----------- | ----------------------------------------------------------------------------------------------------- |
+| A           | Arm 기반 AWS Graviton Process 구동                                                                    |
+| C           | 컴퓨팅 최적화                                                                                         |
+| D           | 고밀도 스토리지                                                                                       |
+| F           | FPGA                                                                                                  |
+| G           | 그래픽 집약적                                                                                         |
+| Hpc         | 고성능 컴퓨팅                                                                                         |
+| I / Im / Is | 스토리지 최적화 / 최적화된 스토리지 (`CPU, Storage = 1:4`) / 최적화된 스토리지 (`CPU, Storage = 1:6`) |
+| Inf         | AWS 추론                                                                                              |
+| M           | 범용                                                                                                  |
+| Mac         | macOS                                                                                                 |
+| P           | GPU 가속                                                                                              |
+| R           | 메모리 최적화                                                                                         |
+| T           | 버스트 가능한 성능                                                                                    |
+| Trn         | AWS Trainium                                                                                          |
+| U           | 고용량 메모리                                                                                         |
+| VT          | 비디오 트랜스 코딩                                                                                    |
+| X           | 메모리 잡약적                                                                                         |
+| Z           | 고용량 메모리                                                                                         |
+
+**Instance Options**
+| Options          | Description                         |
+| ---------------- | ----------------------------------- |
+| a                | AMD Process                         |
+| b * 00 / gb * 00 | NVIDIA Blackwell Gpu로 가속화       |
+| g                | AWS Graviton Process                |
+| i                | Intel Process                       |
+| m* / m* pro      | Apple Chipset                       |
+| b                | 블록 스토리지 최적화                |
+| d                | 인스턴스 저장소 볼륨                |
+| e                | 추가 인스턴스 스토리지, 메모리, GPU |
+| flex             | Flex 인스턴스                       |
+| n                | 네트워크 및 EBS 최적화              |
+| q                | Qualcomm 추론 액셀러레이터          |
+| * tb             | 고용량 메모리 인스턴스의 메모리     |
+| z                | 높은 CPU 주파수                     |
+
 ## 2.1 EC2 Instance 성능
 
 #### 고정 성능 인스턴스
@@ -37,6 +78,35 @@ EC2 Instance는 AWS 클라우드의 가상 서버로 Instance를 시작할 때 �
   * 서버에 필요한 구성 요소 (`운영 체제와 추가 소프트웨어 포함`)를 패키징하는 인스턴스용 사전 구성 템플릿
 * **인스턴스 유형**
   * 인스턴스의 다양한 CPU, Memory, Storage, Network 및 Graphic H/W 구성
+
+# 3. Amazon Machine Image [`AMI`]
+
+Amazon Machine Image (`AMI`)는 Amazon EC2 Intance를 설정하고 부팅하는 데 필요한 S/W를 제공하는 이미지 서비스다. 각 AMI에는 시작하는 인스턴스에 연결할 블록 디바이스를 지정하는 매핑이 포함되어 시작할 때 AMI를 지정해야 하기 때문에 AMI는 선택한 인스턴스 유형과 호환되어야 한다. AWS에서 제공하는 AMI, Public AMI, AMI Marketplace에서 구매한 AMI를 사용할 수 있다.
+
+**AMI는 다음과 같은 경우에만 사용할 수 있다.**
+* Region
+* OS
+* Process Architecture
+* Launch permissions [`시작 권한`]
+* Root Vloume Type
+* Virtualization types
+
+![](https://docs.aws.amazon.com/images/AWSEC2/latest/UserGuide/images/launch-from-ami.png)
+
+동일한 구성의 인스턴스가 여러 개 필요할 때는 한 AMI에서 시작할 수 있다.
+
+## 3.1 AMI 유형 및 특성
+
+#### 시작 권한
+
+시작 권한은 AMI를 사용하여 인스턴스를 시작할 수 있는 사용자를 결정한다. 시작 권한을 부여하면 AMI를 다른 사용자와 공유할 수 있으며, AMI 소유자만 시작 권한을 지정하여 가용성을 결정할 수 있다.
+
+| 시작 권한 [`Launch permission`] | 설명 [`Description`] |
+| ------------------------------- | -------------------- |
+| Pulic | 소유자는 모든 AWS 계정에 시작 권한을 부여한다. |
+| Explicit (`명시적`) | 소유자는 특정 AWS 계정, 조직 또는 OU (`조직 단위`)에 시작 권한을 부여한다. |
+| Implicit (`암묵적`) | 소유자는 AMI에 대한 암묵적인 시작 권한을 갖는다. |
+
 
 ---
 
