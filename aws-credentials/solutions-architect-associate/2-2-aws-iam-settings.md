@@ -32,3 +32,48 @@ https://Your_Account_Alias.signin.aws.amazon.com/console/
 ## 1.2 AWS 계정 별칭 생성
 
 ![alt text](../solutions-architect-associate/img/aws-user-id-alias.png)
+
+# 2. AWS 사용자 정책 설정
+
+
+```json
+{
+	"Version": "2012-10-17",
+	"Id": "example-user-1",
+	"Statement": [
+		{
+			"Sid": "Statement1",
+			"Effect": "Allow",
+			"Action": [
+				"ec2:DeleteSubnet",
+				"ec2:DeleteRoute",
+				"ec2:DeleteVpc",
+				"ec2:DeleteVolume",
+				"ec2:CreateVpc",
+				"ec2:CreateVolume",
+				"ec2:CreateSubnet",
+				"ec2:CreateSnapshot",
+				"ec2:CreateRoute",
+				"ec2:CreateNatGateway",
+				"ec2-instance-connect:*"
+			],
+			"Resource": [
+                "arn:aws:ec2:{Region}:{Account}:instance/{InstanceId}",
+                "*"
+            ]
+		}
+	]
+}
+```
+
+#### Issue Troubleshooting
+
+* Troubleshooting 1 : IAM Policy JSON edit access settings apply error
+	```md
+	arn:aws:ec2:{Region}:{Account}:instance/{InstanceId}
+	```
+
+	```md
+	The Region {ap-northeast-2} is not valid for this resource. Update the resource ARN to include a supported Region.
+	```
+	* Solve Solution

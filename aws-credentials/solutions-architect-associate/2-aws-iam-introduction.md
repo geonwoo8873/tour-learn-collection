@@ -208,18 +208,47 @@ IAM 쿼리 API를 통해 프로그래밍적으로 IAM과 AWS에 접근할 수 �
 * Access Policy Role
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Principal": {
-                "Service": "support.amazonaws.com"
-            },
-            "Action": "sts:AssumeRole"
-        }
-    ]
+	"Version": "2012-10-17",
+	"Id": "example-user-1",
+	"Statement": [
+		{
+			"Sid": "Statement1",
+			"Effect": "Allow",
+			"Action": [
+				"ec2:DeleteSubnet",
+				"ec2:DeleteRoute",
+				"ec2:DeleteVpc",
+				"ec2:DeleteVolume",
+				"ec2:CreateVpc",
+				"ec2:CreateVolume",
+				"ec2:CreateSubnet",
+				"ec2:CreateSnapshot",
+				"ec2:CreateRoute",
+				"ec2:CreateNatGateway",
+				"ec2-instance-connect:*"
+			],
+			"Resource": [
+                "arn:aws:ec2:{Region}:{Account}:instance/{InstanceId}",
+                "*"
+            ]
+		}
+	]
 }
 ```
+
+> [!NOTE]
+> **Consists**
+> * **Version** : 포함된 정책 언어 버전
+> * **Id** : 식별 정책 아이디 (`Optional`)
+> * **Statement** : 하나 이상의 정책  (`Required`)
+> **Statement**
+> * **Sid** : 정의된 정책 식별 (`Optional`)
+> * **Effect** : 허용 (`Allow`)과 거부(`Deny` / `Denies`)의 접근 설정
+> * **Principal** : 해당 정책에 대한 계정, 사용자, 규칙을 적용할 범위
+> * **Action** : 이 정책이 허용하거나 거부하는 작업
+> * **Resource** : 정책이 적용되는 리소스의 목록
+> * **Condition** : 설정 정책이 적용되는 조건 (`Optional`)
+
 
 영향을 줄 수 있는 여러 유형의 정책이 존재하고 이에 따른 허가 요청이 필요하기 때문에 사용자에게 AWS 리소스에 접근할 권한을 부여하는 것으로 계정에서는 신원 기반 정책을 사용할 수 있다. 리소스 기반 정책은 계정 간 접근을 허용하여 요청하는 것을 다른 계정의 정책이 존재해야 하며 요청하는 데 사용하는 자원과 IAM Identity에 접근할 수 있어야 요청을 허용하는 신원 기반 정책이 무조건 필요하다.
 

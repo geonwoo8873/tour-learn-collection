@@ -50,7 +50,7 @@ Amazon S3 지원 AMI는 `인스턴스 저장소 불륨`으로 인스턴스의 �
 
 Amazon Machine Image는 PV (`Paravirtualization` ,`반가상화`) 또는 HVM (`Hardware Virtualization Maichen`, 하드웨어 가상 머신)의 두 가지 유형의 가상화를 사용한다. PV AMI와 HVM AMI의 주요 차이점은 부팅 진행 방식과 성능을 위한 특수 하드웨어 확장 (`리소스`)을 활용 여부에 결정되며, Windows AMI는 HVM AMI으로 분류된다.
 
-**HVM (`Hardware Virtualization Maichen`) **
+**HVM (`Hardware Virtualization Maichen`)**
 
 HVM AMI는 이미지 루트 블록 디바이스의 마스터 부트 레코드를 실행하여 가상화된 H/W 및 부트 세트를 함께 제공된다. 가상화 유형은 운영 체제 미설치 H/W 초기 실행 시점 처럼 가상 머신에서 OS를 수정하지 않고 실행할 수 있기 때문에 EC2 호스트 시스템은 게스트에게 제공되는 기본 하드웨어의 일부 또는 전체를 에뮬레이트를 한다.
 
