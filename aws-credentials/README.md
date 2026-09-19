@@ -6,3 +6,5 @@
 [2. Identity Access Management / IAM](../aws-credentials/solutions-architect-associate/2-aws-iam-introduction.md)  
 [2-1. Identity Security Management Practices / IAM](../aws-credentials/solutions-architect-associate/2-1-aws-iam-security-practices.md)  
 [3. Elastic Coumputing Cloud / EC2](../aws-credentials/solutions-architect-associate/3-aws-elastic-coumputing-cloud.md)  
+[3-1. Elastic amazon machine image / AMI](../aws-credentials/solutions-architect-associate/3-1-aws-elastic-amazon-machine-image.md)  
+[3-2. elastic auto scaling / EC2 Auto Scaling](../aws-credentials/solutions-architect-associate/3-2-aws-elastic-auto-scaling.md)
