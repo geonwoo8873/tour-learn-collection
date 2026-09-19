@@ -20,3 +20,35 @@
   * AWS Solutions Architect Associate (`Preparing`)
   
 * **1Q/2027**
+
+# 3. Learn directory tree
+
+```md
+
+aws-credentials
+  - solutions-architect-associate
+    - eaxmple-source
+    - img
+
+cka
+  - null
+
+computer-science
+  - null
+
+database
+  - example-mysql (`golang ver`)
+
+etc
+  - markdown-guide.md
+  - tech-english-language.md
+
+github-credentials
+  - eaxmple-source
+  - img
+
+programming-language
+  - go
+  - python
+  - rust
+```
