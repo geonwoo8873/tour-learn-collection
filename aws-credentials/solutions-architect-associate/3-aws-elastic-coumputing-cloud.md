@@ -79,8 +79,34 @@ EC2 Instance는 AWS 클라우드의 가상 서버로 Instance를 시작할 때 �
 * **인스턴스 유형**
   * 인스턴스의 다양한 CPU, Memory, Storage, Network 및 Graphic H/W 구성
 
+# 3. AMI 가상화 유형
+
+인스턴스의 가상화 유형은 인스턴스를 시작할 때 사용한 AMI에 의해 결정되며 현재 세대의 인스턴스 유형은 HVM만 지원하기 때문에 이전 세대의 인스턴스 유형들은 반가상화 (`PV`)를 지원하고 리전이 PV 인 인스턴스를 지원한다.
+
+최상의 성능을 위해 HVM AMI를 사용하는 것을 권장하며 향상된 네트워킹을 활용하기 위해선 HVM AMI가 필요하다 AWS 플랫폼이 제공하는 하드웨어 보조 기술이 사용되어 게스트 VM은 기본 하드웨어 플랫폼에 있는 것처럼 실행되지만, 성능 향상을 위해 기존 PV 네트워크 및 스토리지 드라이버가 사용된다.
+
+# 4. 프로세서 지원
+
+## 4.1 Intel Processors
+
+#### 1. Intel AES New Instructions [`AES-NI`]
+
+Intel AES-NI 암호화 명령 세트는 빠른 데이터 보호와 엄격한 보안을 제공할 수 있도록 기존 AES 알고리즘을 개선한 보안 기능이다. 현재 모든 세대의 EC2 인스턴스에서 이 프로세스 기능을 지원한다.
+
+#### 2. Intel Advanced Vector Extesions [`Intel AVX, AVX2, AVX-512`]
+
+Intel AVX, AVX2의 256 Bit와 AVX-512는 512 Bit 명령 세트 확장으로서 FP (`Floating-point`, `부동 소수점`) 집약적 애플리케이션을 위해 설계 되었다. 인턴 AVX Instructions는 이미지 및 오디오와 비디오 처리, 과학 시뮬레이션, 재무 분석, 3D 모델링 및 분석과 같은 애플리케이션의 성능을 향상 시키며 이 기능들은 HVM AMI로 실행된 인스턴스에서만 사용할 수 있다.
+
+#### 3. Intel 터보 부스트 기술 [`Turbo boost technology`]
+
+인텔 터보 부스트 기술 프로세서는 기본 작동 주파수보다 빠른 속도로 코어를 자동으로 실행한다.
+
+#### 4. Intel 딥 러닝 부스트 [`Deep learning boost`, `DL boost`]
 
 
+
+
+# 5. Nitro 구성 시스템
 ---
 
 ## 참조
@@ -88,3 +114,4 @@ EC2 Instance는 AWS 클라우드의 가상 서버로 Instance를 시작할 때 �
 * [Amazon Elastic Computing Clout Instance Pricing](https://aws.amazon.com/ko/ec2/pricing/)
 * [Amazon Elastic Computing Cloud Instance Typs](https://aws.amazon.com/ko/ec2/instance-types/)
 * [Amazon Elastic Computing Cloud Perfomance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html)
+* [AWS Instance Nitro network system](https://docs.aws.amazon.com/ko_kr/ec2/latest/instancetypes/ec2-nitro-instances.html#nitro-version-network-features)
