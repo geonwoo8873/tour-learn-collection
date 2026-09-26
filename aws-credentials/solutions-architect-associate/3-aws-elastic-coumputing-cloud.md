@@ -43,7 +43,7 @@ EC2 Instance는 AWS 클라우드의 가상 서버로 Instance를 시작할 때 �
 | Options          | Description                         |
 | ---------------- | ----------------------------------- |
 | a                | AMD Process                         |
-| b * 00 / gb * 00 | NVIDIA Blackwell Gpu로 가속화       |
+| b * 00 / gb * 00 | NVIDIA Blackwell GPU로 가속화       |
 | g                | AWS Graviton Process                |
 | i                | Intel Process                       |
 | m* / m* pro      | Apple Chipset                       |
