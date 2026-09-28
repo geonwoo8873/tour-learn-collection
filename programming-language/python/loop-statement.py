@@ -7,6 +7,7 @@ set_time_table = {
     "second": 0
     }
 
+# Countdown timer loop logic
 while True:
     set_time_table["second"] -= 1
 
