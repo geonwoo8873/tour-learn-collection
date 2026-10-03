@@ -8,47 +8,45 @@
 
 # 2. Learn Collection RoadMap
 
-* **Acquisition**
+**Acquisition**
   * GitHub Foundation (`Acquisition`)
   * GitHub Admin (`Acquisition`)
 
-* **Currently**
+**Currently**
   * AWS Solutions Architect Associate (`Preparing`)
   * Python Promgraming language learn (`Preparing`)
 
-* **4Q/2026**
+**4Q/2026**
   * AWS Solutions Architect Associate (`Preparing`)
   
-* **1Q/2027**
+**1Q/2027**
 
 # 3. Learn directory tree
 
-```md
-
-aws-credentials
+**aws-credentials**
   - solutions-architect-associate
     - eaxmple-source
     - img
+    - *.md
 
-cka
-  - null
-
-computer-science
-  - null
-
-database
-  - example-mysql (`golang ver`)
-
-etc
-  - markdown-guide.md
-  - tech-english-language.md
-
-github-credentials
+**github-credentials**
   - eaxmple-source
   - img
+  - *.md
 
-programming-language
-  - go
-  - python
-  - rust
-```
+**cka**
+  - N/A
+
+**computer-science**
+  - N/A
+
+**database**
+  - example-mysql (`golang ver`)
+
+**programming-language**
+  - [go](/programming-language/go/README.md)
+  - [python](/programming-language/python/README.md)
+
+**etc**
+  - markdown-guide.md
+  - tech-english-language.md
