@@ -26,13 +26,13 @@ distributed_by_tier: dict[str, list[str]] = {
 
 index_arrays: dict[str, list[str]] = {}
 # [Keyword] enumerate: use idx to pick one unique member per tier for each array.
-# [Keyword] list comprehension: collect one member from each tier.
 # [Keyword] random.shuffle: randomize display/order inside each array.
 for idx, name in enumerate(index_names):
     picked = [distributed_by_tier[tier][idx] for tier in tiers]
     random.shuffle(picked)
     index_arrays[f"{name}_index_array"] = picked
 
+# [Keyword] list comprehension: collect one member from each tier.
 # [Keyword] flatten with list comprehension + set + assert
 # Flatten all arrays into one list and verify global uniqueness.
 # If duplicate exists, assert raises an error.

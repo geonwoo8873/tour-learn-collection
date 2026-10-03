@@ -14,7 +14,7 @@ while True:
     )}
     """)
     
-    read_file = input("Enter the file operation (r, a, w, x): ")
+    read_file = input("Enter the file operation (r, a, w, x, b, t): ")
 
     match read_file:
         case "r", "read":
@@ -37,5 +37,15 @@ while True:
                 else:
                     content = input("Enter the content to write: ")
                     file.write(content)
+        case "b", "binary":
+            read_file = input("Enter the file path: ")
+            with open(read_file, 'rb') as file:
+                content = file.read()
+            print(content)
+        case "t", "text":
+            read_file = input("Enter the file path: ")
+            with open(read_file, 'rt') as file:
+                content = file.read()
+            print(content)
         case _:
             print("Invalid option")
