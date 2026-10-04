@@ -20,7 +20,7 @@ wget https://go.dev/dl/go1.27.1.linux-amd64.tar.gz
 > 
 
 <details>
-<summary>Linux wget options</summary>
+<summary>Linux wget command options</summary>
 
 | Options                | Description                                                                                          | Example                                                 |
 | ---------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
@@ -44,7 +44,7 @@ sudo <compression_type> -<options> <path> -<options> <go_version_pkg_url>
 sudo tar -C /usr/local -xzf go1.27.1.linux-amd64.tar.gz
 ```
 
-**3. User 프로필 경로 추가 (User profile for add export path)**
+**3. User 프로필 경로 추가 (Add export path to in the User profile)**
 
 ```sh
 vi .profile
@@ -60,6 +60,12 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 ```sh
 go version
+```
+
+**5. Linux 실행 파일 생성**
+
+```sh
+GOOS=linux GOARCH=amd64 go build
 ```
 
 ## 2.
@@ -81,6 +87,7 @@ go version
 | Pprof | 코드 프로파일링 보고서 생성 |
 
 </details>
+
 
 ---
 
