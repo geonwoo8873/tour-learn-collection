@@ -73,7 +73,7 @@ GOOS=linux GOARCH=amd64 go build
 #### 2.1 Golang 프로젝트 구성 파일 확장자 [project configure file extension]
 
 <details>
-<summary>Go project conifg options</summary>
+<summary>Go project conifg command options</summary>
 
 | Name  | Description                 |
 | ----- | --------------------------- |
