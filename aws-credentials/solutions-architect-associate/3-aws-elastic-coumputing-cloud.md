@@ -1,4 +1,9 @@
-# 1. Elastic Coumputing Cloud [`EC2`]
+# AWS Elastic Computing Cloud
+
+[1. Elastic Computing Cloud [EC2]](#1-elastic-computing-cloud-ec2)  
+[2. Amazon EC2 Type](#2-amazon-ec2-인스턴스-유형)
+
+# 1. Elastic Computing Cloud [`EC2`]
 
 Amazon Elastic Compute Cloud (`Amazon EC2`)는 Amazon Web Service (`AWS`) 클라우드에서 온디맨드 확장 가능 컴퓨팅 용량을 제공하여, 사용자가 하드웨어 비용을 절감함 으로써 애플리케이션을 더욱 빠르게 개발 및 배포에 집중할 수 있게 해준다. 이는 원하는 수의 가상 서버를 구축하고 보안 및 네트워킹을 구성해 스토리지를 관리하여, 용량을 `스케일 업` 하거나 유동성을 이용하여 월간이나 연간 프로세스 또는 웹 사이트 트래픽 급증 등 다양한 이슈에도 컴퓨팅 사용량이 많은 작업을 처리할 수 있게 해준다.
 
@@ -9,7 +14,8 @@ EC2 Instance는 AWS 클라우드의 가상 서버로 Instance를 시작할 때 �
 # 2. Amazon EC2 인스턴스 유형
 
 > [!CAUTION]
-> **U-9tb1, U-12tb1, U-18tb1, U-24tb1의 Instance 유형은 더 이상 새로 생성할 수 없으며, 워크로드에 저장된 메모리 인스턴스가 필요한 경우 U7i Instance 유형을 대신 사용하는 것을 권장한다.**
+> **AWS Offical :**
+> * **U-9tb1, U-12tb1, U-18tb1, U-24tb1의 Instance 유형은 더 이상 새로 생성할 수 없으며, 워크로드에 저장된 메모리 인스턴스가 필요한 경우 U7i Instance 유형을 대신 사용하는 것을 권장한다.**
 
 `Amazon EC2`는 `Cpu`, `Memory`, `Storage`, `Network` 등 호스트 컴퓨터의 일부 리소스를 특정 인스턴스에 전용을 할당되어, 네트워크 및 디스크 하위 시스템과 같은 기타 리소스를 인스턴스 간에 공유한다. 호스트 컴퓨터의 각 인스턴스가 공유 리소스 중 하나를 최대한 가용률이 높은 경우 리소스는 각 인스턴스에 분배하지만, 리소스 사용률이 저조할 경우 리소스에 여유가 있는 한 특정 인스턴스가 해당 리소스를 더 많이 소비할 수 있게 해준다.
 
@@ -17,7 +23,9 @@ EC2 Instance는 AWS 클라우드의 가상 서버로 Instance를 시작할 때 �
 
 ## 2.1 EC2 Instance Type 명명 규칙
 
-**Instance Serise**
+<details>
+<summary>Instance Serise</summary>
+
 | Serise      | Description                                                                                           |
 | ----------- | ----------------------------------------------------------------------------------------------------- |
 | A           | Arm 기반 AWS Graviton Process 구동                                                                    |
@@ -39,7 +47,11 @@ EC2 Instance는 AWS 클라우드의 가상 서버로 Instance를 시작할 때 �
 | X           | 메모리 잡약적                                                                                         |
 | Z           | 고용량 메모리                                                                                         |
 
-**Instance Options**
+</details>
+
+<details>
+<summary>Instance Options</summary>
+
 | Options          | Description                         |
 | ---------------- | ----------------------------------- |
 | a                | AMD Process                         |
@@ -56,21 +68,23 @@ EC2 Instance는 AWS 클라우드의 가상 서버로 Instance를 시작할 때 �
 | * tb             | 고용량 메모리 인스턴스의 메모리     |
 | z                | 높은 CPU 주파수                     |
 
-## 2.1 EC2 Instance 성능
+</details>
 
-#### 고정 성능 인스턴스
+## 2.2 Amazon EC2 Instance 성능
+
+#### 1. 고정 성능 인스턴스
 
 고정 성능의 인스턴스는 고정 CPU 리소스를 제공하여 언제든지 워크로드에 필요한 동안 전체 CPU 성능을 일관된 상태에서 제공하고 유지할 수 있다. 비디오 인코딩과 같은 애플리케이션, 대용량 웹사이트 또는 HPC 애플리케이션을 위해 일관되게 높은 CPU 성능이 필요하다면, 고정 성능 인스터스 유형이 적합하다.
 
-#### 성능 버스트 가능 인스턴스
+#### 2. 성능 버스트 가능 인스턴스
 
 버스트 가능 성능 (`T`) 인스턴스는 기본 수준의 CPU 성능외에 기준 이상으로 퍼포먼스를 높일 수 있는 기능을 제공한다. 기준 CPU는 대규모 마이크로 서비스, 웹 서버, 중소 규모의 데이터베이스, 데이터 로깅, 코드 리포지토리, 가상 데스크톱, 개발 및 테스트 환경과 같은 대부분의 범용 워크로드의 요구 사항을 충족하도록 설계되어있다.
 
-#### Flex 인스턴스
+#### 3. Flex 인스턴스
 
 `C7i-flex`, `C8i-flex`, `M7i-flex`, `M8i-flex`, `R8i-flex`와 같은 인스턴스는 리소스의 균형을 제공하며 광범위한 범용 애플리케이션을 실행하는 가장 비용 측면에서 효율적인 방법을 제공한다. 이러한 인스턴스에서 안정적인 리소스를 제공중 40%의 기준 CPU 성능을 제공하며, 이는 대부분 범용 워크로드에 대한 컴퓨팅 요구를 사항을 충족하도록 설계했기 때문에 더 많은 성능이 필요한 경우 이러한 인스턴스에서는 기준 CPU 성능을 초과해 약 24시간 동안 95%에서 최대 100%의 성능을 제공할 수 있는 기능을 제공한다.
 
-## 2.2 EC2 Instance 기능
+## 2.3 Amazon EC2 Instance 기능
 
 * **인스턴스 (`Instance`)**
   * 가상 서버
@@ -85,9 +99,15 @@ EC2 Instance는 AWS 클라우드의 가상 서버로 Instance를 시작할 때 �
 
 최상의 성능을 위해 HVM AMI를 사용하는 것을 권장하며 향상된 네트워킹을 활용하기 위해선 HVM AMI가 필요하다 AWS 플랫폼이 제공하는 하드웨어 보조 기술이 사용되어 게스트 VM은 기본 하드웨어 플랫폼에 있는 것처럼 실행되지만, 성능 향상을 위해 기존 PV 네트워크 및 스토리지 드라이버가 사용된다.
 
+> [!NOTE]
+> **Azmone Machine Image (`AMI`)에 대한 학습 내용은 [3-1 AWS Elastic Azmone Machine Iamge.md](../solutions-architect-associate/3-1-aws-elastic-amazon-machine-image.md)으로 이동하면 된다.** 
+
 # 4. 프로세서 지원
 
-## 4.1 Intel Processors
+> [!CAUTION]
+> **프로세서 지원은 향후 SAA 취득 후 추가 기재하여 Intel 및 AMD 포함할 예정**
+
+<!--## 4.1 Intel Processors
 
 #### 1. Intel AES New Instructions [`AES-NI`]
 
@@ -101,12 +121,23 @@ Intel AVX, AVX2의 256 Bit와 AVX-512는 512 Bit 명령 세트 확장으로서 F
 
 인텔 터보 부스트 기술 프로세서는 기본 작동 주파수보다 빠른 속도로 코어를 자동으로 실행한다.
 
-#### 4. Intel 딥 러닝 부스트 [`Deep learning boost`, `DL boost`]
+#### 4. Intel 딥 러닝 부스트 [`Deep learning boost`, `DL boost`] -->
 
 
+# 5. Amazon EC2 인스턴스 타입 명세 [Intance Type Specifications]
 
+Amazon EC2는 다양한 사용 사례에 맞춰 최적화된 인스턴스 유형을 제공하기에 각 CPU, Memory, Storage, Network 등 다양한 조합으로 구성되어 있기 때문에, 지원에 맞는 적절한 자원 조합을 선택할 수 있는 유연성을 제공받을 수 있다.
 
-# 5. Nitro 구성 시스템
+**EC2 인스턴스를 아래와 같은 범주로 분류 하지만 대표적인 성능으로 분류 범위는 [2.2 EC2 Instance 성능](#22-ec2-instance-성능)을 참고하면 된다.**
+
+* 범용
+  * 컴퓨팅의 균형을 제공하여 기억력과 네트워킹 자원와 같은 범요성을 갖춰 애플리케이션을 배포와 운영에 적합하다.
+* 버스터 성능
+  * T 인스턴스 계열 버스터블 성능 인스턴스라고 불리며 CPU 성능이 언제, 어떻게, 얼마나에 대한 외부 변수로 인해 기준선을 초과할 수 있게 설계되었다.
+* 컴퓨팅 최적화
+  * 고성능 프로세서의 이점을 활용하는 컴퓨팅 집약적 애플리케이션용으로 설계되어 이러한 인스턴스는 주로 워크로드, 마디어 트랜스코딩, 고성능 웹 서버, 모델링 등 학습 추론에 적합하다.
+* 
+
 ---
 
 ## 참조

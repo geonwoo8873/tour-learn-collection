@@ -1,12 +1,17 @@
 name: Test Action
 
 on:
-  # push:
+  push:
   #   branches:
   #     - main
   # pull_request:
   #   branches:
   #     - main
+    paths-ignore:
+    - '**/*.md'
+    - '**/*.jpg'
+    - '**/*.png'
+    - '**/*.gif'
   workflow_dispatch:
     # inputs:
     #   example_input:
