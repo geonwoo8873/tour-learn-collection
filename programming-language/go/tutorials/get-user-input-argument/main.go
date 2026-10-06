@@ -122,6 +122,7 @@ func main() {
 		printUsage(io.Writer(os.Stdout))
 		os.Exit(1)
 	}
+	
 
 	err = validateArgs(cfg)
 	if err != nil {
