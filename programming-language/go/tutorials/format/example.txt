@@ -1,0 +1,17 @@
+서식 지정자 [Format specifier]:
+`Printf`는 서식 지정자를 포함한 형식화된 출력 방식으로, 다양한 데이터 타입이 지정되어 출력을 하고자 하거나 혹은 출력 형식을 세밀하게 제어하고자 할 때 사용
+
+%v : 데이터 타입에 맞춘 기본 형태로 출력 [Value of the value]
+%T : 데이터 타입 출력 [Type of the value]
+%t : Boolean 참 혹은 거짓 형태로 출력 [True or False]
+%d : 10진수 정수 형태로 출력 [Decimal integer value]
+%b : 2진수 정수 형태로 출력 [Binary integer value]
+%x \ %X : 16진수 정수 형태로 출력 [Hexadecimal integer value] Note: x/X는 10+ 이상 값은 a-f 소/대 문자로 표시
+%c : 유니코드 단일 문자 형태로 출력 [Character value] Note: 정수 타입만 가능
+%o \ %O : 8진수 정수 형태로 출력 [Octal integer value] Note: o/O는 10+ 이상 값은 0-7로 표시하지만 O는 앞에 8진수임을 명시하여 값을 출력
+%e \ %E : 지수 형태로 출력 [Scientific notation] Note: e/E는 소수점 이하 값과 지수부를 포함하여 출력, E는 지수부를 대문자로 표시
+%f \ %F : 소수 형태로 출력 [Floating-point number] Note: f/F는 소수점 이하 값을 포함하여 출력, F는 소수점 이하 값을 대문자로 표시
+%g \ %G : 가장 간결한 형태로 출력 [Compact representation] Note: g/G는 소수점 이하 값과 지수부를 포함하여 출력, G는 지수부를 대문자로 표시
+%s : 문자열 형태로 출력 [String value]
+%q : 따옴표로 감싼 문자열 형태로 출력 [Quoted string value]
+%p : 포인터 주소 형태로 출력 [Pointer address] | Example: fmt.Printf("%p", &variable)
