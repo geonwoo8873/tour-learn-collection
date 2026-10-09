@@ -17,7 +17,6 @@ wget https://go.dev/dl/go1.27.1.linux-amd64.tar.gz
 
 > [!TIP]
 > **`wget`은 웹에서 특정 데이터 파일을 가져오는(`GET`) Linux 명령어이다.**
-> 
 
 <details>
 <summary>Linux wget command options</summary>
@@ -68,9 +67,23 @@ go version
 GOOS=linux GOARCH=amd64 go build
 ```
 
-## 2.
+### 1.2 Windows
 
-#### 2.1 Golang 프로젝트 구성 파일 확장자 [project configure file extension]
+**1. 설치 파일 다운로드 (Install file download)**
+
+```ps
+winget search "go.lang"
+```
+
+```ps
+Name                                 Id                             Version       Match       Source
+----------------------------------------------------------------------------------------------------
+<...>
+Go Programming Language              GoLang.Go                      1.27.0        Tag: golang winget
+<...>
+```
+
+## 2. Golang 프로젝트 구성 파일 확장자 [project configure file extension]
 
 <details>
 <summary>Go project conifg command options</summary>
@@ -93,4 +106,6 @@ GOOS=linux GOARCH=amd64 go build
 
 ## Reference
 
-* [Go Programming Language Installation Page](https://go.dev/dl/)
+* [1. Go Programming Language Installation Page](https://go.dev/dl/)
+* [2. Golang Docker Client Package Docs](https://pkg.go.dev/github.com/moby/moby/client#section-readme)
+* [3. Docker Client SDK Docs Offical Home](https://docs.docker.com/reference/api/engine/sdk/)
