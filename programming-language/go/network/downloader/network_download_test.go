@@ -21,7 +21,7 @@ func setHTTPServer() *httptest.Server {
 
 // Test 함수명은 테스트 진행될 함수임을 나타내기 때문에, 다른 Test 함수가 존재하면 실행대상이 된다.
 // 즉 Test**** 함수 네이밍은 진행할 테스트 케이스외에 붙이지 말아야된다.
-func Test(t *testing.T) {
+func TestServerResponse(t *testing.T) {
 	ts := setHTTPServer()
 	defer ts.Close()
 
@@ -40,6 +40,6 @@ func Test(t *testing.T) {
 //// CMD
 // go test -v
 //// Result
-// === RUN   TestRemoteResource
-// --- PASS: TestRemoteResource (0.00s)
+// === RUN   TestServerResponse
+// --- PASS: TestServerResponse (0.00s)
 // PASS
