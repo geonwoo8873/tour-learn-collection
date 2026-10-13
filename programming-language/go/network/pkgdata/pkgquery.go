@@ -2,6 +2,7 @@ package pkgdata
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 )
@@ -21,6 +22,10 @@ func PackageData(url string) ([]pkgData, error) {
 	}
 
 	defer req.Body.Close()
+
+	if req.Header.Get("Content-Type") != "application/json" {
+		return nil, fmt.Errorf("unexpected content type: %s", req.Header.Get("Content-Type"))
+	}
 
 	data, err := io.ReadAll(req.Body)
 	if err != nil {
