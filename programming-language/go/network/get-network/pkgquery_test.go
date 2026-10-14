@@ -1,4 +1,4 @@
-package pkgdata
+package getnetwork
 
 import (
 	"fmt"
