@@ -44,3 +44,10 @@ func main() {
 
 	router.Run(":8080")
 }
+
+//// Result
+/*
+[GIN-debug] Listening and serving HTTP on :8080
+[GIN] 2026/10/14 - 14:18:47 | 200 |       0s |             ::1 | GET      "/"
+[GIN] 2026/10/14 - 14:18:47 | 404 |       0s |             ::1 | GET      "/favicon.ico"
+*/
