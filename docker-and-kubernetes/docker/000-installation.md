@@ -78,3 +78,7 @@ desktop-linux *   Docker Desktop                            unix:///home/geonwoo
 ```bash
 docker context use default<or desktop-linux>
 ```
+
+> [!IMPORTANT]
+> 기존에 사용하던 도커 엔진이나 도커 데스크탑에서 시스템 변경을 하기전에 가동중인 리소스가 있다면 필수로 정리 해야한다. 정리하지 않게되면 포트를 실시간으로 점유하여 새로 컨테이너를 생성 중 포트 할당 불가로 생성이 안된다.
+> https://github.com/geonwoo8873/tour-learn-collection/issues/31
