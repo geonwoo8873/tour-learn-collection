@@ -2,7 +2,7 @@
 
 ## *.Ubuntu Install
 
-#### Can't connecting kubetnetes api
+### Can't connecting kubetnetes api
 
 ```bash
 geonwoo@geonwoo-work:~/projects/org-main/main-infra-manage/docker$ kubectl get pods
