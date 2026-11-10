@@ -55,3 +55,26 @@ sudo systemctl start docker && sudo systemctl enable docker
 ```bash
 sudo chmod 666 /var/run/docker.sock
 ```
+
+#### 선택. Docker desktop 설치
+
+```bash
+ sudo apt-get update
+ curl -sl https://desktop.docker.com/linux/main/amd64/docker-desktop-amd64.deb?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64
+ sudo apt install ./docker-desktop-amd64.deb
+```
+**사용중인 도커 엔진 또는 데스크탑 목록 확인**
+
+```bash
+docker context ls
+```
+```bash
+NAME              DESCRIPTION                               DOCKER ENDPOINT                                    ERROR
+default           Current DOCKER_HOST based configuration   unix:///var/run/docker.sock                        
+desktop-linux *   Docker Desktop                            unix:///home/geonwoo/.docker/desktop/docker.sock   
+```
+
+**도커 엔진 혹은 데스크탑 사용 전환**
+```bash
+docker context use default<or desktop-linux>
+```
