@@ -49,12 +49,12 @@ sudo systemctl start docker && sudo systemctl enable docker
 
 #### 선택. 일반 사용자 도커 엔진 사용 권한 부여
 
-> [!WARNING]
-> 해당 권한을 부여할 시 반드시 이용에 적합한 사용자인지 확인을 해야하고, 이는 시스템에 악영향을 끼칠 수 있다.
-
 ```bash
 sudo chmod 666 /var/run/docker.sock
 ```
+
+> [!WARNING]
+> 해당 권한을 부여할 시 반드시 이용에 적합한 사용자인지 확인을 해야하고, 이는 시스템에 악영향을 끼칠 수 있다.
 
 #### 선택. Docker desktop 설치
 
