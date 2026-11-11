@@ -8,6 +8,16 @@
 >[!IMPORTANT]
 > Go Install은 우선 앞서 도커 컨테이너화 하기전 서버를 시작하여 확인하고 싶은 경우에만 설치 진행 해주시면 됩니다.
 
+#### Local Build
+
+```bash
+go mod download
+```
+
+```bash
+go run main.go
+```
+
 #### Docker Image Build
 
 ```bash
