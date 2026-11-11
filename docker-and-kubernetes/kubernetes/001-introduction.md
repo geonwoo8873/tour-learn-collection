@@ -1,6 +1,6 @@
 # Kubernetes
 
-Kubernetes는 클러스터 전체 상태를 Control Plane이 관리하는 구조로, 중앙 저장소를 기준으로 동작하는 SVN과 유사하게 하나의 관리 지점을 통해 클러스터 상태를 제어한다. 다만 Kubernetes는 단순 버전 관리 시스템이 아닌 분산 시스템의 상태를 지속적으로 조정(Reconciliation)하는 플랫폼이라는 차이점이 존재한다.
+Kubernetes는 클러스터 전체 상태를 Control Plane이 관리하는 구조로, 중앙 저장소를 기준으로 동작하는 SVN처럼 하나의 중앙 상태 저장소를 기준으로 동작한다기보다, Control Plane을 통해 클러스터의 원하는 상태를 관리하고 각 노드에 반영한다. 다만 Kubernetes는 단순 버전 관리 시스템이 아닌 분산 시스템의 상태를 지속적으로 조정(Reconciliation)하는 플랫폼이라는 차이점이 존재한다.
 
 Cluster 관리자는 노드(`Node`)라고 하는 각각의 서버를 관리하여 처리 용량을 확장하기 위해 노드를 추가하거나 서비스에서 제외하는 행위를 차례로 업데이트하는 롤링 업데이트(`Rolling update`)를 적용할 수 있다. 흔히 주위에서 볼 수 있는 Microsoft Azure의 AKS나 Amazon Web Service에서 제공하는 EKS 같은 관리자 대신하여 관리하는 서비스를 이행함 으로써 웹 인터페이스나 CLI으로 편리하게 사용할 수 있도록 구성되어 있다.
 
@@ -74,6 +74,10 @@ nginx                        1/1     Running   0          52s
 nginx-app-5cf778f7bb-62fkj   1/1     Running   0          34s
 ```
 
+> [!TIP]
+> Pod phase는 Pending, Running, Succeeded, Failed, Unknown이며, kubectl get pods의 STATUS에는 CrashLoopBackOff 같은 상태 이유도 표시될 수 있다.
+> 또한 RESTARTS는 환경 변수값이 잘못 전달됐거나, 코드 문제로 재시작 과정을 거치는데 주의해야 하는 것은 compose로 직접 하는 변경 사항을 적용하는 것이 아닌 쿠버네티스 API에서 변경점을 확인해서 롤링 업데이트 방식으로 변경될 수 있다.
+
 ## 1.4 특정 Pod 상세 정보 조회
 
 ```bash
@@ -134,3 +138,19 @@ Events:
   Normal  Created    28s   kubelet            spec.containers{nginx}: Container created
   Normal  Started    28s   kubelet            spec.containers{nginx}: Container started
 ```
+
+쿠버네티스는 직접 컨테이너를 실행하지 않으며, 컨테이너를 생성할 책임을 해당 노드에 설치된 컨테이너 런타임에 맡기는 형태로 특정 컨테이너 런타임은 도커가 주 매개체로 될 순 있지만, 그외 다른 형태로 이루어져 있을 수 있다. 결국 파드가 컨테이너를 추상화 시킨 것인 이유도 있다고 볼 수 있다. 파드는 쿠버네티스가 관리하는 리소스고, 컨테이너는 외부에서 관리되어 `kubectl` 명령어를 통해 다양한 정보를 받아 확인할 수 있다.
+
+## 1.5 Pod에 있는 Container 접속
+
+```bash
+kubectl port-forward pod/nginx 8080:80
+```
+
+```bash
+Forwarding from 127.0.0.1:8080 -> 80
+Forwarding from [::1]:8080 -> 80
+Handling connection for 8080
+```
+
+> Port-Forward는 도커 컴포즈나 혹은 컨테이너 생성시에 -p를 더해 해당 포트를 외부로 노출 시키는 방법과 동일
