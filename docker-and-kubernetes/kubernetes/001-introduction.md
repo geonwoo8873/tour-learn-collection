@@ -155,4 +155,10 @@ Forwarding from [::1]:8080 -> 80
 Handling connection for 8080
 ```
 
+#### 다른 터미널에서 응답 확인
+
+```bash
+curl.exe http://localhost:8080
+```
+
 > Port-Forward는 도커 컴포즈나 혹은 컨테이너 생성시에 -p를 더해 해당 포트를 외부로 노출 시키는 방법과 동일
