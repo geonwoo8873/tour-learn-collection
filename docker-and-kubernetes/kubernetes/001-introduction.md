@@ -52,6 +52,8 @@ kubectl run nginx --image nginx
 pod/nginx created
 ```
 
+현재 예시는 단순하게 Docker Hub에 공개되어 있는 공식 nginx 이미지를 사용 했지만 실제 업무 워크플로에서는 이미지 태그가 `v1.0.0` 형태나 SHA-256 일부를 적용되어 관리를 할 수 있기 때문에 해당 활용할 이미지의 이름, 태그, 버전 등을 자세히 확인 해야 한다.
+
 ## 1.2 Deployment 생성
 
 ```bash
