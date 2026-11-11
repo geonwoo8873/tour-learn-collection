@@ -13,7 +13,7 @@ COPY . .
 # 하지만, 향후 C 라이브러리를 사용해야 하는 경우에는 빌드가 깨질 수 있다.
 RUN CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o /out/server .
 
-#------------------------------------------------------------------------
+#-------------------------------[Multi-stage Build]-----------------------------------------
 
 FROM alpine:3.23
 RUN apk add --no-cache ca-certificates
@@ -21,7 +21,7 @@ WORKDIR /app
 
 COPY --from=build /out/server ./server
 
-# `USER`는 컨테이너가 실행될 때 사용할 프로세스를 지정을하고 기본 GID 65532 권한을 싱핼하라는 명령이다.
+# `USER`는 컨테이너가 실행될 때 사용할 프로세스를 지정을하고 기본 GID 65532 권한을 실행할 사용자로 설정하라는 명령이다.
 # 기본으로 root 사용자 권한으로 실행되지만 USER 명령으로 비루트 사용자로 변경한다.
 USER 65532:65532
 
