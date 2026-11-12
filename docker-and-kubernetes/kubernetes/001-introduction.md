@@ -162,3 +162,12 @@ curl.exe http://localhost:8080
 ```
 
 > Port-Forward는 도커 컴포즈나 혹은 컨테이너 생성시에 -p를 더해 해당 포트를 외부로 노출 시키는 방법과 동일
+
+## 1.6 리소스 정리
+
+```bash
+kubectl delete deploy <deploy_labels>
+```
+
+> [!TIP]
+> Deployment로 실행하는 경우에 파드를 삭제하더라도 `replicas`이 기본적으로 1로 설정되어 있기 때문에 다시 생성되기 때문에 반드시 `kubectl get deploy`를 조회해서 해당 삭제할 리소스를 입력 하면 된다.
