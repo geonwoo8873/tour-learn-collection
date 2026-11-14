@@ -1,0 +1,102 @@
+##########################################
+# MySQL Kubernetes Architecture Layout
+# Configuration
+#   -> Public [ConfigMap]
+#   -> Private [Secret]
+# Volume Mounts
+#   -> PersistentVolumeClaim [mypvc]
+# Client Service
+# Client StatefulSet
+##########################################
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+  labels:
+    app: mysql-config
+
+data:
+  MYSQL_DATABASE: mydatabase
+  MYSQL_USER: myuser
+  TZ: Asia/Seoul
+  
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secret
+  labels:
+    app: mysql-secret
+type: Opaque
+
+stringData:
+  MYSQL_PASSWORD: "YOUR_MYSQL_PASSWORD"
+  MYSQL_ROOT_PASSWORD: "YOUR_MYSQL_ROOT_PASSWORD"
+
+---
+#### PersistentVolumeClaim [PVC]
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mypvc
+spec:
+  resources:
+    requests:
+      storage: 250Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  labels:
+    app: mysql-service
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: mysql
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+
+spec:
+  serviceName: "mysql"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8-oraclelinux9
+        envFrom:
+        - configMapRef:
+            name: mysql-config
+        - secretRef:
+            name: mysql-secret
+        volumeMounts:
+        - name: mypvc
+          mountPath: /var/lib/mysql
+        - name: mypvc
+          mountPath: /docker-entrypoint-initdb.d/dummy.sql
+        ports:
+        - containerPort: 3306
+      volumes:
+        - name: mypvc
+          persistentVolumeClaim:
+            claimName: mypvc
