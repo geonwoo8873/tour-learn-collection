@@ -55,6 +55,7 @@ metadata:
   name: mysql-service
   labels:
     app: mysql-service
+
 spec:
   ports:
     - port: 3306
