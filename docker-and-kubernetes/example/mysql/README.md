@@ -136,6 +136,73 @@ kubectl delete -f api-config.yaml
 - StatefulSet만 삭제하면 PVC는 남는다. 데이터를 지우려면 PVC를 따로 삭제해야 한다.
 - 파드를 줄이려면 `kubectl scale statefulset mysql --replicas=0`을 사용한다.
 
+## 데이터 확인
+
+### 1. 파드 안에서 mysql 클라이언트 실행
+
+```powershell
+kubectl exec -it mysql-0 -- mysql -uroot -p
+```
+
+비밀번호는 Secret의 `MYSQL_ROOT_PASSWORD` 값이다. 비밀번호를 명령에 직접 쓰지 않으려면 위처럼 프롬프트로 입력한다.
+
+```sql
+SHOW DATABASES;
+USE testdb;
+SHOW TABLES;
+SELECT * FROM users;
+```
+
+### 2. 한 줄로 쿼리 실행
+
+```powershell
+kubectl exec mysql-0 -- mysql -uroot -p1234 -e "SHOW DATABASES;"
+```
+
+- 비밀번호가 셸 히스토리에 남으므로 학습용으로만 사용한다.
+
+### 3. dummy.sql 적용
+
+초기화 경로에 마운트하지 않았다면 파드에 직접 넣어 실행한다.
+
+```powershell
+kubectl cp dummy.sql mysql-0:/tmp/dummy.sql
+kubectl exec mysql-0 -- sh -c "mysql -uroot -p1234 mydatabase < /tmp/dummy.sql"
+```
+
+- `dummy.sql`의 `USE testdb;`는 ConfigMap의 `MYSQL_DATABASE: mydatabase`와 다르다. 둘 중 하나를 맞춘다.
+
+### 4. 로컬에서 접속 (포트 포워딩)
+
+```powershell
+kubectl port-forward pod/mysql-0 3306:3306
+```
+
+다른 터미널에서 로컬 클라이언트로 접속한다.
+
+```powershell
+mysql -h 127.0.0.1 -P 3306 -uroot -p
+```
+
+### 5. 환경변수와 Secret 값 확인
+
+```powershell
+kubectl exec mysql-0 -- env | Select-String MYSQL
+kubectl get secret mysql-secret -o jsonpath="{.data.MYSQL_ROOT_PASSWORD}"
+```
+
+- Secret 조회 값은 base64이다. 디코딩은 `[Text.Encoding]::UTF8.GetString([Convert]::FromBase64String("<값>"))`로 한다.
+
+### 6. 데이터 유지 확인
+
+```powershell
+kubectl delete pod mysql-0
+kubectl get pods -w
+kubectl exec -it mysql-0 -- mysql -uroot -p -e "SHOW DATABASES;"
+```
+
+- 파드가 다시 만들어져도 PVC가 `/var/lib/mysql`에 마운트되어 있으면 데이터가 유지된다.
+
 ## 발생한 문제와 원인, 해결 방안
 
 ### 1. metadata.name과 labels를 맞춰야 하는가
