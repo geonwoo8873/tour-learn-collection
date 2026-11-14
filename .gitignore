@@ -13,5 +13,6 @@
 **/target
 
 # Secret files
-
+.env.config
+.env.secret
 *.env
