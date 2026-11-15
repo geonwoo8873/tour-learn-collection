@@ -103,3 +103,35 @@ status:
 
 > 디플로이먼트는 파드와 직접적으로 관계를 갖지 않아 레이블 셀렉터와 일치하는 파드가 하나라도 존재하기만 하면 되기 때문에 파드의 레이블이 수정되면 디플로이먼트는 해당 파드를 인지하지 못하게 된다.
 
+## 1.4 디플로이먼트가 생성한 파드의 레이블 수정
+
+```bash
+kubectl label pods -l app=nginx-app --overwrite app=nginx
+```
+
+```bash
+NAME                         READY   STATUS    RESTARTS      AGE
+nginx-app-5cf778f7bb-9fwdv   1/1     Running   0             63s
+nginx-app-5cf778f7bb-zhn8g   1/1     Running   2 (18h ago)   3d9h
+```
+
+
+> [!TIP]
+> `get pods`는 단순히 NAME, READY, STATUS, RESTARTS, AGE만 조회 결과 값을 제공을 해주지만 Docker처럼 특정 메타데이터값을 출력 요청을 할 수 있다. 단 일부 명령어 옵션에서는 빈공간을 허용하지 않아 붙여서 사용해야 하는 경우가 빈번하니 이점을 유의해야 한다.   
+> ```bash
+> kubectl get pods -l app -o custom-columns=NAME:metadata.name,LABELS:metadata.labels
+> ```
+
+`get pods`를 통해서 위의 조회 결과와 같이 새로운 파드가 생긴것을 볼 수 있는데 이는 레이블의 이름이 변경함으로써 파드 이름과 일치 하지 않기 때문에 새로운 파드를 생성한 것이다. 기본적으로 `replicas`이 1로 설정되어 있더라도 기존 파드는 삭제되지 않고 관리 범위에 벗어난 객체로 취급되어 주로 디버깅이나 개발 환경에서 사용하는 방법으로 이용된다.
+
+```bash
+# 원래의 레이블로 수정하여 관리 범위 벗어난 파드 복구
+kubectl label pods -l app=nginx --overwrite app=nginx-app
+```
+
+```bash
+NAME                         READY   STATUS    RESTARTS      AGE
+nginx-app-5cf778f7bb-zhn8g   1/1     Running   2 (18h ago)   3d9h
+```
+
+기존 파드의 `Label`을 원상태로 수정을 하면 더 이상 새로 생성된 파드가 필요 없어지기 때문에 `replicas` 조건 충족으로 삭제를 진행한다.
