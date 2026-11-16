@@ -145,7 +145,8 @@ nginx-app-5cf778f7bb-zhn8g   1/1     Running   2 (18h ago)   3d9h
 
 Kubernetes API는 JSON 형식으로 리소스를 주고받으며, `kubectl`은 YAML 매니페스트도 입력으로 받을 수 있다. YAML은 주석을 작성할 수 있고 한 파일에 여러 리소스를 `---`로 구분해 정의할 수 있어 널리 사용된다.
 
-아래 예제는 데이터베이스 비밀번호를 저장소에 넣지 않도록 Secret 정의를 포함하지 않는다. 매니페스트를 적용하기 전에 `mysql-secret`을 별도로 준비해야 하며, 필요한 키는 예제 아래에서 설명한다.
+> [!WARNING]
+> 아래 예제는 비밀 환경 변수를 노출 시키지 않기 위해 YOUR...와 같은 임시 예제로 대체 했다. 매니페스트를 적용하기 전에 `mysql-secret`을 별도로 준비해야 하며, 필요한 키는 예제 아래에서 설명한다.
 
 ```yaml
 ##########################################
@@ -160,7 +161,7 @@ Kubernetes API는 JSON 형식으로 리소스를 주고받으며, `kubectl`은 Y
 ##########################################
 
 apiVersion: v1
- kind: ConfigMap
+kind: ConfigMap
 metadata:
   name: mysql-config
   labels:
@@ -170,6 +171,19 @@ data:
   MYSQL_DATABASE: mydatabase
   MYSQL_USER: myuser
   TZ: Asia/Seoul
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secret
+  labels:
+    app: mysql-secret
+type: Opaque
+
+stringData:
+  MYSQL_PASSWORD: "YOUR_MYSQL_PASSWORD"
+  MYSQL_ROOT_PASSWORD: "YOUR_MYSQL_ROOT_PASSWORD"
   
 ---
 #### PersistentVolumeClaim [PVC]
@@ -239,17 +253,57 @@ spec:
             claimName: mypvc
 ```
 
-* apiVersion: 매니페스트 스크립트의 쿠버네티스 API 버전
-* kind: 정의하고자 하는 리소스의 타입을 명시
-* metadata: 리소스 이름 등 메타데이터를 정의한다. `name`은 필수이며 `labels`는 선택 사항이다.
-* spec: 리소스 종류에 따라 달라지는 원하는 상태를 정의한다. 워크로드 리소스에서는 실행할 컨테이너와 이미지 등을 지정한다.
-
 이 예제에서 `mysql-secret`은 민감한 값을 저장소에 넣지 않도록 매니페스트에서 제외했다. 적용 전에 `mysql-secret`을 별도로 생성해야 하며, `MYSQL_PASSWORD`와 `MYSQL_ROOT_PASSWORD` 키가 필요하다. Secret 값은 저장소에 커밋하지 않는다. Kubernetes Secret의 값은 기본적으로 base64 인코딩일 뿐이므로, 접근 권한과 저장 시 암호화 설정도 별도로 고려해야 한다.
 
-단순히 CLI를 통해 kubectl 명령어를 사용할 때보다 사용자가 인지해야 하는 데이터 정보가 더욱 많아지며, 선언적 스크립트라는 장점이 있기에 쿠버네티스에 해야할 일들을 일일이 지시하는 방식이 아니라 최종 결과가 어떻게 되어야 하는지 알려주고 만드는 과정은 개입하지 않는 방식이다.
-
 새로운 파드를 kubectl을 사용하여 다른 파드와 마찬가지로 다룰 수 잇고 세부 정보를 보거나 네트워크 트래픽을 특정 파드로 전달하는 것도 가능하다. 하지만 매니페스트는 애플리케이션 정의를 공유하기 쉽고, 동일한 배포를 반복할 수 있는 점에서 차이가 존재하지만 결국 명령어를 사용해야 하는 시점은 있기 때문에 앞으로도 명령어와 로그 및 모니터링에 대한 보는 방법을 터득하면 향후 운영 관점에서 상대적인 쉬운 식별이 가능해진다.
+
+매니페스트의 필드는 리소스 종류(`kind`)에 따라 달라진다. 아래는 공통 구조와 Deployment에서 자주 만나는 필드다.
+
+| 필드                                              | 역할                                           | 알아둘 점                                                                     |
+| ------------------------------------------------- | ---------------------------------------------- | ----------------------------------------------------------------------------- |
+| `apiVersion`                                      | 사용할 Kubernetes API 그룹과 버전              | 리소스 종류에 맞는 API 버전을 사용한다.                                       |
+| `kind`                                            | 생성할 리소스 종류                             | 예: `Deployment`, `Service`, `ConfigMap`                                      |
+| `metadata.name`                                   | 리소스 이름                                    | 같은 namespace 안에서 고유해야 한다.                                          |
+| `metadata.namespace`                              | 리소스가 속할 namespace                        | 생략하면 현재 namespace가 사용된다. 클러스터 범위 리소스에는 적용되지 않는다. |
+| `metadata.labels`                                 | 리소스를 선택하고 분류하기 위한 키-값          | Service와 컨트롤러의 셀렉터가 이 레이블을 기준으로 대상을 찾는다.             |
+| `metadata.annotations`                            | 도구나 사용자용 추가 메타데이터                | 레이블과 달리 일반적으로 리소스 선택에는 사용하지 않는다.                     |
+| `spec`                                            | 리소스의 원하는 상태                           | 세부 구조는 `kind`마다 다르다.                                                |
+| `spec.selector`                                   | Deployment가 관리할 Pod를 선택하는 조건        | `template.metadata.labels`와 일치해야 하며, 생성 후 변경할 수 없다.           |
+| `spec.template`                                   | 컨트롤러가 생성할 Pod의 템플릿                 | Pod의 `metadata`와 `spec`을 포함한다. 모든 리소스에 있는 필드는 아니다.       |
+| `spec.replicas`                                   | 유지할 Pod 개수                                | Deployment 등의 복제 가능한 워크로드에서 사용한다.                            |
+| `spec.strategy`                                   | Deployment 업데이트 방식                       | 기본적으로 롤링 업데이트를 사용한다.                                          |
+| `spec.template.spec.containers`                   | Pod에서 실행할 컨테이너 목록                   | 각 컨테이너의 이미지, 환경 변수, 포트 등을 지정한다.                          |
+| `resources`                                       | 컨테이너의 CPU·메모리 요청량과 제한량          | 스케줄링과 자원 사용 제어에 영향을 준다.                                      |
+| `readinessProbe`, `livenessProbe`, `startupProbe` | 준비 완료, 생존, 시작 상태 확인                | 목적이 서로 다르므로 애플리케이션 동작에 맞게 설정한다.                       |
+| `volumes`, `volumeMounts`                         | Pod의 스토리지를 정의하고 컨테이너 경로에 연결 | `volumes`는 Pod에, `volumeMounts`는 컨테이너에 지정한다.                      |
+| `status`                                          | Kubernetes가 관찰한 현재 상태                  | 보통 직접 작성하지 않으며, 컨트롤러가 갱신한다.                               |
+
+단순히 CLI를 통해 kubectl 명령어를 사용할 때보다 사용자가 인지해야 하는 데이터 정보가 더욱 많아지며, 선언적 스크립트라는 장점이 있기에 쿠버네티스에 해야할 일들을 일일이 지시하는 방식이 아니라 최종 결과가 어떻게 되어야 하는지 알려주고 만드는 과정은 개입하지 않는 방식이다.
 
 ## 2.1 Deployment 정의
 
 고수준 리소스를 사용한다면 애플리케이션 매니페스트로 광범위한 프로세스를 구축할 수 있고 YAML 포맷으로 Deployment를 적용할 때 필수적으로 작성해야 하는 부분은 실행할 파드의 정의다. 파드는 자신만의 정의 내용이 별도로 존재하기 때문에 Deployment 정의는 파드에 대한 정의를 포함하게 된다.
+
+```yaml
+apiVersion:apps/v1
+kind: Deployment
+metadata:
+  name: example-deployment
+
+spec:
+  selector:
+    matchLabels: example-spec
+  template:
+    metadata:
+      labels:
+        app: example-spec
+  containers:
+    - name: example-container
+      image: example-image-name
+```
+
+모든 애플리케이션 매니페스트는 kubectl의 `apply` 명령어를 사용하여 동일한 방식으로 배치되고, 복잡한 애플리케이션이라도 하나 또는 여러 개의 YAML 파일에 해당 애플리케이션 기술하고 같은 kubectl 명령으로 배치할 수 있다. 현재 예제에는 없는 리소스 제한과 파드 갯수 등 명시해 어떤 운영을 확인하고자 하는 수준으로 설정값을 지정해 유동적으로 관리할 수 있다.
+
+## 2.2 Pod에서 실행 중인 애플리케이션에 접근
+
+Pod와 Deployment가 애플리케이션의 가용성을 확보하는 역할을 하더라도, 결국 애플리케이션은 컨테이너 속에서 동작하기 때문에 컨테이너 런타임에 따라 직접적인 컨테이너 접근을 허용하지 않을 수 있다. 그렇다해도 kubectl을 통해 파드 안에 있는 컨테이너에 접근할 수 있는 방법이 있으며 쿠버네티스 명령행 도구를 사용하면 컨테이너 안에서 명령을 실행하거나, 애플리케이션 로그를 확인하거나 파일을 복사할 수 있다.
