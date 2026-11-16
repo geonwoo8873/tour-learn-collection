@@ -307,3 +307,41 @@ spec:
 ## 2.2 Pod에서 실행 중인 애플리케이션에 접근
 
 Pod와 Deployment가 애플리케이션의 가용성을 확보하는 역할을 하더라도, 결국 애플리케이션은 컨테이너 속에서 동작하기 때문에 컨테이너 런타임에 따라 직접적인 컨테이너 접근을 허용하지 않을 수 있다. 그렇다해도 kubectl을 통해 파드 안에 있는 컨테이너에 접근할 수 있는 방법이 있으며 쿠버네티스 명령행 도구를 사용하면 컨테이너 안에서 명령을 실행하거나, 애플리케이션 로그를 확인하거나 파일을 복사할 수 있다.
+
+#### 파드의 내부 IP 주소 확인
+
+```bash
+kubectl get pod nginx-app-5cf778f7bb-zhn8g -o custom-columns=NAME:metadata.name,POD_IP:status.podIP
+```
+
+```bash
+NAME                         POD_IP
+nginx-app-5cf778f7bb-zhn8g   10.244.1.2
+```
+
+#### 파드 내부와 연결을 위한 대화형 셀 실행
+
+```bash
+kubectl exec -it nginx-app-5cf778f7bb-zhn8g -- sh
+```
+
+> [!TIP]
+> docker와 같은 대화형 셀 실행 방법은 exec -it <container-name> -- sh로 동일하지만 구분자를 추가해서 입력해주면 진입이 가능하다.
+
+```bash
+error: exec [POD] [COMMAND] is not supported anymore. Use exec [POD] -- [COMMAND] instead
+See 'kubectl exec -h' for help and examples
+```
+
+> [!NOTE]
+> 위와 같은 명령어를 입력 했을 때 발생하는 오류인데 `kubectl exec -it <pod-name> sh` 기준으로 대부분의 명령어에 `--`가 제외되어 있어 구분자가 필요하기 때문에 추가하지 않았다면 한번 추가해서 실행을 해보면 된다.
+
+#### 파드 내부에서 IP 주소 확인
+
+```bash
+hostname -i
+```
+
+```bash
+10.244.1.2
+```
