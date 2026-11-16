@@ -285,7 +285,7 @@ spec:
 고수준 리소스를 사용한다면 애플리케이션 매니페스트로 광범위한 프로세스를 구축할 수 있고 YAML 포맷으로 Deployment를 적용할 때 필수적으로 작성해야 하는 부분은 실행할 파드의 정의다. 파드는 자신만의 정의 내용이 별도로 존재하기 때문에 Deployment 정의는 파드에 대한 정의를 포함하게 된다.
 
 ```yaml
-apiVersion:apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: example-deployment
