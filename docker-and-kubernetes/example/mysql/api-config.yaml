@@ -85,6 +85,14 @@ spec:
       containers:
       - name: mysql
         image: mysql:8-oraclelinux9
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+
+          limits:
+            memory: "1Gi"
+            cpu: "1"
         envFrom:
         - configMapRef:
             name: mysql-config
