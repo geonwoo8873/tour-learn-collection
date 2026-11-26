@@ -322,7 +322,7 @@ nginx-app-5cf778f7bb-zhn8g   10.244.1.2
 #### 파드 내부와 연결을 위한 대화형 셀 실행
 
 ```bash
-kubectl exec -it nginx-app-5cf778f7bb-zhn8g -- sh
+kubectl exec -it [POD_NAME] -- sh
 ```
 
 > [!TIP]
@@ -345,3 +345,85 @@ hostname -i
 ```bash
 10.244.1.2
 ```
+
+#### 파드의 로그 확인
+
+**모든 라인수 만큼 로그 확인**
+```bash
+kubectl logs [POD_NAME]  
+```
+
+```bash 
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+/docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+/docker-entrypoint.sh: Configuration complete; ready for start up
+2026/11/26 11:48:59 [notice] 1#1: using the "epoll" event method
+2026/11/26 11:48:59 [notice] 1#1: nginx/1.31.10
+2026/11/26 11:48:59 [notice] 1#1: built by gcc 14.2.0 (Debian 14.2.0-19) 
+2026/11/26 11:48:59 [notice] 1#1: OS: Linux 6.18.58.1-microsoft-standard-WSL2
+2026/11/26 11:48:59 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1073741816:1073741816
+2026/11/26 11:48:59 [notice] 1#1: start worker processes
+2026/11/26 11:48:59 [notice] 1#1: start worker process 33
+2026/11/26 11:48:59 [notice] 1#1: start worker process 34
+2026/11/26 11:48:59 [notice] 1#1: start worker process 35
+2026/11/26 11:48:59 [notice] 1#1: start worker process 36
+2026/11/26 11:48:59 [notice] 1#1: start worker process 37
+2026/11/26 11:48:59 [notice] 1#1: start worker process 38
+2026/11/26 11:48:59 [notice] 1#1: start worker process 39
+2026/11/26 11:48:59 [notice] 1#1: start worker process 40
+2026/11/26 11:48:59 [notice] 1#1: start worker process 41
+2026/11/26 11:48:59 [notice] 1#1: start worker process 42
+2026/11/26 11:48:59 [notice] 1#1: start worker process 43
+2026/11/26 11:48:59 [notice] 1#1: start worker process 44
+2026/11/26 11:48:59 [notice] 1#1: start worker process 45
+2026/11/26 11:48:59 [notice] 1#1: start worker process 46
+2026/11/26 11:48:59 [notice] 1#1: start worker process 47
+2026/11/26 11:48:59 [notice] 1#1: start worker process 48
+```
+
+
+**특정 라인수 만큼 로그 확인**
+```bash
+# kubectl logs [OPTION] [POD_NAME]
+kubectl logs --tail=2 [POD_NAME]
+```
+
+```bash
+2026/11/26 11:48:59 [notice] 1#1: start worker process 47
+2026/11/26 11:48:59 [notice] 1#1: start worker process 48
+```
+
+`tail`은 로그 파일의 마지막 부분을 확인할 때 사용한다. `kubectl logs --tail=2 [pod_name]` 명령은 가장 최근에 출력된 로그 2줄만 조회한다. 실시간으로 로그를 확인하려면 `-f(--follow)` 옵션을 함께 사용해야 한다. 
+
+> [!NOTE]
+> `kubectl get events -w`은 해당 파드의 모든 이벤트 기록을 보는 것이기 때문에 `--tail=2` 같은 특정 로그를 보고 싶은 경우와 혼돈 해서는 안된다.
+
+| option | description |
+| -- | -- |
+| -f | 파일의 업데이트 내용을 실시간으로 계속 출력 |
+| -n [int] | 파일의 마지막줄 부터 지정한 라인수 만큼 내용을 출력 |
+| -c [byte] | 파일의 마지막부터 지정한 바이트만큼의 내용을 출력 |
+| -p | 파일의 헤더와 상단의 파일 이름만 출력하지 않고 내용만 출력 |
+| -v | 출력전 파일의 헤더와 이름 먼저 출력 후 내용 출력 |
+
+> [!TIP]
+> 여러 파일의 로그를 확인 하고 싶을 경우 `tail [FILE_NAME1] [FILE_NAME2]`으로 가능하다.
+
+~~#### [파드의 로그 확인](#파드의-로그-확인)과 기록된 실제 로그와 동일한지 확인~~
+
+```bash
+docker container logs --tail=2 $(docker container ls -q --filter label=io.kubernetes.container.name=[POD_NAME])
+```
+
+> [!NOTE]
+> `docker container logs` 명령어는 현재 작성자의 터미널에서 확인 할 수 없기에 향후 재시도 진행 후 갱신 될 예정이다. 하지만 VSCode의 확장 프로그램의 kubernetes에서 Workload를 통해 pod 로그를 확인할 수 있는 방법이 존재한다.
+
+#### 레이블 셀렉터와 일치한 모든 파드의 로그 열람
+
+kubectl exec deploy/[DEPLOYMENT_NAME] -- sh -c 'wget -O http://localhost>/dev/null'
