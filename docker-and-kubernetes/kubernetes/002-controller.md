@@ -426,4 +426,6 @@ docker container logs --tail=2 $(docker container ls -q --filter label=io.kubern
 
 #### 레이블 셀렉터와 일치한 모든 파드의 로그 열람
 
+```bash
 kubectl exec deploy/[DEPLOYMENT_NAME] -- sh -c 'wget -O http://localhost>/dev/null'
+```
