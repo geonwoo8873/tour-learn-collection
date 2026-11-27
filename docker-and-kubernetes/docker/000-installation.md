@@ -63,6 +63,23 @@ sudo chmod 666 /var/run/docker.sock
  curl -sl https://desktop.docker.com/linux/main/amd64/docker-desktop-amd64.deb?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64
  sudo apt install ./docker-desktop-amd64.deb
 ```
+
+> [!WARNING]
+> [선택. Docker Desktop 설치](#선택-docker-desktop-설치)에서 사용되는 명령어는 amd64 기반 OS 체제에서 보여주는 예시 명령어이기 때문에 반드시 사용자는 사용중인 OS의 체제에 맞게 설치해야 한다.
+
+**Docker 리소스 위치**
+
+```bash
+# Input
+which docker.sock
+```
+
+```bash
+# Result
+/var/run/docker.sock
+```
+
+
 **사용중인 도커 엔진 또는 데스크탑 목록 확인**
 
 ```bash
@@ -82,3 +99,11 @@ docker context use default<or desktop-linux>
 > [!IMPORTANT]
 > 기존에 사용하던 도커 엔진이나 도커 데스크탑에서 시스템 변경을 하기전에 가동중인 리소스가 있다면 필수로 정리 해야한다. 정리하지 않게되면 포트를 실시간으로 점유하여 새로 컨테이너를 생성 중 포트 할당 불가로 생성이 안된다.
 > https://github.com/geonwoo8873/tour-learn-collection/issues/31
+
+### 5. 도커 권한 부여
+
+해당 내용은 보안과 직접적인 연관이 깊기 때문에 최대한 구체적인 내용이 작성이 될 예정이지만, 현재 작성자는 모든 보안의 전문적인 지식이 없을 뿐 더러 직업이 보안 엔지니어가 아니기 때문에 일시적인 방법일 뿐이다. 별도 보안에 대한 내용은 직접 검색하면서 찾아야 하며, 이에 대한 내용은 주의해서 작성될 것이다.
+
+```bash
+sudo usermod -aG docker <username>
+```
