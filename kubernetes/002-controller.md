@@ -415,7 +415,7 @@ kubectl logs --tail=2 [POD_NAME]
 > [!TIP]
 > 여러 파일의 로그를 확인 하고 싶을 경우 `tail [FILE_NAME1] [FILE_NAME2]`으로 가능하다.
 
-~~#### [파드의 로그 확인](#파드의-로그-확인)과 기록된 실제 로그와 동일한지 확인~~
+#### [파드의 로그 확인](#파드의-로그-확인)과 기록된 실제 로그와 동일한지 확인
 
 ```bash
 docker container logs --tail=2 $(docker container ls -q --filter label=io.kubernetes.container.name=[POD_NAME])
@@ -428,5 +428,24 @@ kubectl exec deploy/[DEPLOYMENT_NAME] -- sh -c 'wget -O http://localhost>/dev/nu
 ```
 
 > [!WARNING]
-> `docker container logs`와 `kubectl exec ... -- sh -c` 명령어는 현재 작성자의 터미널에서 확인 할 수 없기에 향후 재시도 진행 후 갱신 될 예정이다. 하지만 VSCode의 확장 프로그램의 kubernetes에서 Workload를 통해 pod 로그를 확인할 수 있는 방법이 존재한다.
+> `docker container logs`와 `kubectl exec ... -- sh -c` 명령어는 현재 작성자의 터미널에서 확인 할 수 없기에 향후 재시도 진행 후 갱신 될 예정이다. 하지만 VSCode의 확장 프로그램의 kubernetes에서 Workload를 통해 pod 로그를 확인할 수 있는 방법이 존재한다.  
+> [`11/27/2026 수정`]: 발생한 문제를 확인한 결과 단순히 nginx를 deploy해서 exec 통해 내부에서 wegt 자체가 존재하지 않기 때문에 명령어가 실행되지 않은 문제였다.
 
+#### Deploy의 운영 체제 정보 출력
+
+```bash
+geonwoo@MAIN-DESKTOP:~$ kubectl exec deploy/nginx-app -- cat /etc/os-release
+```
+
+```bash
+PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
+NAME="Debian GNU/Linux"
+VERSION_ID="13"
+VERSION="13 (trixie)"
+VERSION_CODENAME=trixie
+DEBIAN_VERSION_FULL=13.8
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+```
