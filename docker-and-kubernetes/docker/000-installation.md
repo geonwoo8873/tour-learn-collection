@@ -79,7 +79,6 @@ which docker.sock
 /var/run/docker.sock
 ```
 
-
 **사용중인 도커 엔진 또는 데스크탑 목록 확인**
 
 ```bash
