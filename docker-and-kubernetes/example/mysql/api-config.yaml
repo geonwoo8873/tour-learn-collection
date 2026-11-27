@@ -102,7 +102,7 @@ spec:
         - name: mypvc
           mountPath: /var/lib/mysql
         - name: mypvc
-          mountPath: /docker-entrypoint-initdb.d/dummy.sql
+          mountPath: /docker-entrypoint-initdb.d
         ports:
         - containerPort: 3306
       volumes:
