@@ -421,11 +421,12 @@ kubectl logs --tail=2 [POD_NAME]
 docker container logs --tail=2 $(docker container ls -q --filter label=io.kubernetes.container.name=[POD_NAME])
 ```
 
-> [!NOTE]
-> `docker container logs` 명령어는 현재 작성자의 터미널에서 확인 할 수 없기에 향후 재시도 진행 후 갱신 될 예정이다. 하지만 VSCode의 확장 프로그램의 kubernetes에서 Workload를 통해 pod 로그를 확인할 수 있는 방법이 존재한다.
-
 #### 레이블 셀렉터와 일치한 모든 파드의 로그 열람
 
 ```bash
 kubectl exec deploy/[DEPLOYMENT_NAME] -- sh -c 'wget -O http://localhost>/dev/null'
 ```
+
+> [!WARNING]
+> `docker container logs`와 `kubectl exec ... -- sh -c` 명령어는 현재 작성자의 터미널에서 확인 할 수 없기에 향후 재시도 진행 후 갱신 될 예정이다. 하지만 VSCode의 확장 프로그램의 kubernetes에서 Workload를 통해 pod 로그를 확인할 수 있는 방법이 존재한다.
+
