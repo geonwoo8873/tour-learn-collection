@@ -1,0 +1,6 @@
+[    0.327923] RAS: Correctable Errors collector initialized.
+[    5.625658] WSL (183) ERROR: CheckConnection: getaddrinfo() failed: -5
+[   21.496639] WSL (1 - init(docker-desktop)) ERROR: ConfigApplyWindowsLibPath:2200: open /etc/ld.so.conf.d/ld.wsl.conf failed 2
+[    0.327923] RAS: Correctable Errors collector initialized.
+[    5.625658] WSL (183) ERROR: CheckConnection: getaddrinfo() failed: -5
+[   21.496639] WSL (1 - init(docker-desktop)) ERROR: ConfigApplyWindowsLibPath:2200: open /etc/ld.so.conf.d/ld.wsl.conf failed 2

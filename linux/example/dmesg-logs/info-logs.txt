@@ -1,0 +1,32 @@
+[    0.026972] ACPI: Using ACPI (MADT) for SMP configuration information
+[    1.311748] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[    1.312223] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[    1.312595] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[    1.313181] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[    5.625658] WSL (183) ERROR: CheckConnection: getaddrinfo() failed: -5
+[   21.512143] WSL (1 - init(docker-desktop)) WARNING: /usr/share/zoneinfo/Asia/Seoul not found. Is the tzdata package installed?
+[   21.587718] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[   21.588246] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[   21.588791] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[   21.589439] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[   22.304575] /proc/cgroups lists only v1 controllers, use cgroup.controllers of root cgroup for v2 info
+[   22.810503] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[   22.810884] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[   22.811342] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[   22.811931] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[    0.026972] ACPI: Using ACPI (MADT) for SMP configuration information
+[    1.311748] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[    1.312223] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[    1.312595] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[    1.313181] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[    5.625658] WSL (183) ERROR: CheckConnection: getaddrinfo() failed: -5
+[   21.512143] WSL (1 - init(docker-desktop)) WARNING: /usr/share/zoneinfo/Asia/Seoul not found. Is the tzdata package installed?
+[   21.587718] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[   21.588246] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[   21.588791] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[   21.589439] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2
+[   22.304575] /proc/cgroups lists only v1 controllers, use cgroup.controllers of root cgroup for v2 info
+[   22.810503] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[   22.810884] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[   22.811342] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -22
+[   22.811931] misc dxg: dxgk: dxgkio_query_adapter_info: Ioctl failed: -2

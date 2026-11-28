@@ -1,0 +1,24 @@
+[    0.000000] KERNEL supported cpus:
+[    0.027067] Booting paravirtualized kernel on Hyper-V
+[    0.028802] Kernel command line: initrd=\initrd.img WSL_ROOT_INIT=1 panic=-1 nr_cpus=16 hv_utils.timesync_implicit=1 printk.devkmsg=on page_reporting.page_reporting_order=5 hv_storvsc.storvsc_max_hw_queues=4 console=hvc0 debug pty.legacy_count=0 WSL_ENABLE_CRASH_DUMP=1
+[    0.028865] Unknown kernel command line parameters "WSL_ROOT_INIT=1 WSL_ENABLE_CRASH_DUMP=1", will be passed to user space.
+[    0.090285] mitigations: Enabled attack vectors: user_kernel, user_user, guest_host, guest_guest, SMT mitigations: auto
+[    0.090288] Speculative Return Stack Overflow: WARNING: See https://kernel.org/doc/html/latest/admin-guide/hw-vuln/srso.html for mitigation options.
+[    0.090313] x86/fpu: Supporting XSAVE feature 0x1000: 'Control-flow Kernel registers (KVM only)'
+[    0.125290] Memory: 15648972K/16056956K available (18792K kernel code, 2626K rwdata, 13312K rodata, 4120K init, 3304K bss, 398080K reserved, 0K cma-reserved)
+[    0.342256] Freeing unused kernel image (initmem) memory: 4120K
+[    0.342512] Write protecting the kernel read-only data: 34816k
+[    0.343692] Freeing unused kernel image (text/rodata gap) memory: 1684K
+[    0.344538] Freeing unused kernel image (rodata/data gap) memory: 1024K
+[    0.000000] KERNEL supported cpus:
+[    0.027067] Booting paravirtualized kernel on Hyper-V
+[    0.028802] Kernel command line: initrd=\initrd.img WSL_ROOT_INIT=1 panic=-1 nr_cpus=16 hv_utils.timesync_implicit=1 printk.devkmsg=on page_reporting.page_reporting_order=5 hv_storvsc.storvsc_max_hw_queues=4 console=hvc0 debug pty.legacy_count=0 WSL_ENABLE_CRASH_DUMP=1
+[    0.028865] Unknown kernel command line parameters "WSL_ROOT_INIT=1 WSL_ENABLE_CRASH_DUMP=1", will be passed to user space.
+[    0.090285] mitigations: Enabled attack vectors: user_kernel, user_user, guest_host, guest_guest, SMT mitigations: auto
+[    0.090288] Speculative Return Stack Overflow: WARNING: See https://kernel.org/doc/html/latest/admin-guide/hw-vuln/srso.html for mitigation options.
+[    0.090313] x86/fpu: Supporting XSAVE feature 0x1000: 'Control-flow Kernel registers (KVM only)'
+[    0.125290] Memory: 15648972K/16056956K available (18792K kernel code, 2626K rwdata, 13312K rodata, 4120K init, 3304K bss, 398080K reserved, 0K cma-reserved)
+[    0.342256] Freeing unused kernel image (initmem) memory: 4120K
+[    0.342512] Write protecting the kernel read-only data: 34816k
+[    0.343692] Freeing unused kernel image (text/rodata gap) memory: 1684K
+[    0.344538] Freeing unused kernel image (rodata/data gap) memory: 1024K

@@ -1,0 +1,42 @@
+[    0.000270] ACPI: Reserving FACP table memory at [mem 0x101000-0x101113]
+[    0.000271] ACPI: Reserving DSDT table memory at [mem 0x1011b8-0x11f2d3]
+[    0.000271] ACPI: Reserving FACS table memory at [mem 0x101114-0x101153]
+[    0.000272] ACPI: Reserving OEM0 table memory at [mem 0x101154-0x1011b7]
+[    0.000272] ACPI: Reserving SRAT table memory at [mem 0x11f2d4-0x11f683]
+[    0.000272] ACPI: Reserving APIC table memory at [mem 0x11f684-0x11f74b]
+[    0.000407] Early memory node ranges
+[    0.027063] PM: hibernation: Registered nosave memory: [mem 0x00000000-0x00000fff]
+[    0.027065] PM: hibernation: Registered nosave memory: [mem 0x000a0000-0x001fffff]
+[    0.027065] PM: hibernation: Registered nosave memory: [mem 0xf8000000-0xffffffff]
+[    0.094178] Freeing SMP alternatives memory: 52K
+[    0.125290] Memory: 15648972K/16056956K available (18792K kernel code, 2626K rwdata, 13312K rodata, 4120K init, 3304K bss, 398080K reserved, 0K cma-reserved)
+[    0.126272] x86/mm: Memory block size: 128MB
+[    0.202114] Freeing initrd memory: 3412K
+[    0.306098] hv_balloon: Using Dynamic Memory protocol version 2.0
+[    0.307165] hv_balloon: Cold memory discard hint enabled with order 5
+[    0.342256] Freeing unused kernel image (initmem) memory: 4120K
+[    0.343692] Freeing unused kernel image (text/rodata gap) memory: 1684K
+[    0.344538] Freeing unused kernel image (rodata/data gap) memory: 1024K
+[    0.387610] WSL (1 - mini_init): WSL user cgroup created with memory.max=16011620352 (totalram=16045174784, reserved=33554432)
+[   48.423702] hv_balloon: Max. dynamic memory size: 15682 MB
+[    0.000270] ACPI: Reserving FACP table memory at [mem 0x101000-0x101113]
+[    0.000271] ACPI: Reserving DSDT table memory at [mem 0x1011b8-0x11f2d3]
+[    0.000271] ACPI: Reserving FACS table memory at [mem 0x101114-0x101153]
+[    0.000272] ACPI: Reserving OEM0 table memory at [mem 0x101154-0x1011b7]
+[    0.000272] ACPI: Reserving SRAT table memory at [mem 0x11f2d4-0x11f683]
+[    0.000272] ACPI: Reserving APIC table memory at [mem 0x11f684-0x11f74b]
+[    0.000407] Early memory node ranges
+[    0.027063] PM: hibernation: Registered nosave memory: [mem 0x00000000-0x00000fff]
+[    0.027065] PM: hibernation: Registered nosave memory: [mem 0x000a0000-0x001fffff]
+[    0.027065] PM: hibernation: Registered nosave memory: [mem 0xf8000000-0xffffffff]
+[    0.094178] Freeing SMP alternatives memory: 52K
+[    0.125290] Memory: 15648972K/16056956K available (18792K kernel code, 2626K rwdata, 13312K rodata, 4120K init, 3304K bss, 398080K reserved, 0K cma-reserved)
+[    0.126272] x86/mm: Memory block size: 128MB
+[    0.202114] Freeing initrd memory: 3412K
+[    0.306098] hv_balloon: Using Dynamic Memory protocol version 2.0
+[    0.307165] hv_balloon: Cold memory discard hint enabled with order 5
+[    0.342256] Freeing unused kernel image (initmem) memory: 4120K
+[    0.343692] Freeing unused kernel image (text/rodata gap) memory: 1684K
+[    0.344538] Freeing unused kernel image (rodata/data gap) memory: 1024K
+[    0.387610] WSL (1 - mini_init): WSL user cgroup created with memory.max=16011620352 (totalram=16045174784, reserved=33554432)
+[   48.423702] hv_balloon: Max. dynamic memory size: 15682 MB

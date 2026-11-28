@@ -1,0 +1,28 @@
+[    0.000246] RAMDISK: [mem 0x03c78000-0x03fccfff]
+[    0.172091] VFS: Disk quotas dquot_6.6.0
+[    0.300310] scsi 0:0:0:0: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+[    0.302906] scsi 0:0:0:1: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+[    0.333012] sd 0:0:0:0: [sda] Attached SCSI disk
+[    0.340897] sd 0:0:0:1: [sdb] Attached SCSI disk
+[    0.363510] scsi 0:0:0:2: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+[    0.392826] sd 0:0:0:2: [sdc] Attached SCSI disk
+[    0.728769] scsi 0:0:0:3: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+[    0.760941] sd 0:0:0:3: [sdd] Attached SCSI disk
+[   21.378365] scsi 0:0:0:4: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+[   21.383749] scsi 0:0:0:5: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+[   21.416967] sd 0:0:0:4: [sde] Attached SCSI disk
+[   21.432906] sd 0:0:0:5: [sdf] Attached SCSI disk
+[    0.000246] RAMDISK: [mem 0x03c78000-0x03fccfff]
+[    0.172091] VFS: Disk quotas dquot_6.6.0
+[    0.300310] scsi 0:0:0:0: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+[    0.302906] scsi 0:0:0:1: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+[    0.333012] sd 0:0:0:0: [sda] Attached SCSI disk
+[    0.340897] sd 0:0:0:1: [sdb] Attached SCSI disk
+[    0.363510] scsi 0:0:0:2: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+[    0.392826] sd 0:0:0:2: [sdc] Attached SCSI disk
+[    0.728769] scsi 0:0:0:3: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+[    0.760941] sd 0:0:0:3: [sdd] Attached SCSI disk
+[   21.378365] scsi 0:0:0:4: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+[   21.383749] scsi 0:0:0:5: Direct-Access     Msft     Virtual Disk     1.0  PQ: 0 ANSI: 5
+[   21.416967] sd 0:0:0:4: [sde] Attached SCSI disk
+[   21.432906] sd 0:0:0:5: [sdf] Attached SCSI disk

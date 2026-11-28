@@ -1,0 +1,10 @@
+dmesg | grep -i kernel >> ./dmesg-logs/kernel-logs.txt
+dmesg | grep -i error >> ./dmesg-logs/error-logs.txt
+dmesg | grep -i warning >> ./dmesg-logs/warning-logs.txt
+dmesg | grep -i info >> ./dmesg-logs/info-logs.txt
+dmesg | grep -i critical >> ./dmesg-logs/critical-logs.txt
+dmesg | grep -i debug >> ./dmesg-logs/debug-logs.txt
+dmesg | grep -i cpu >> ./dmesg-logs/cpu-logs.txt
+dmesg | grep -i memory >> ./dmesg-logs/memory-logs.txt
+dmesg | grep -i disk >> ./dmesg-logs/disk-logs.txt
+dmesg | grep -i network >> ./dmesg-logs/network-logs.txt

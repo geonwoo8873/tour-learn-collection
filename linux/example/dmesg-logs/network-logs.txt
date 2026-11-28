@@ -1,0 +1,2 @@
+[    0.311833] drop_monitor: Initializing network drop monitor service
+[    0.311833] drop_monitor: Initializing network drop monitor service
